@@ -1,0 +1,41 @@
+    use uo;
+use os;
+
+include ":spells:tnmagery";
+include "include/client";
+include "include/sounds";
+include "include/say";
+include ":timedScripts:timedScripts";
+include ":charactercreation:resists";
+
+program SpellScript(params)
+	var who := params[1];
+	var targ := params[2];
+	params := 0; // No longer needed
+
+	if (!targ.isa(POLCLASS_MOBILE))
+		SendSysMessageEx(who, "Isto nao pode ser alvejado por essa magia.", SSM_FAIL);
+		return;
+	endif
+
+	var amt;
+	if (!CheckResist(targ, VONTADE, 40+cint(AP_GetSkill(who, MAGICLORE))))
+		amt := Cint(AP_GetSkill(who, MAGICLORE)*0.5);
+	else
+		amt := Cint(AP_GetSkill(who, MAGICLORE)*0.25);
+	endif
+
+	if (temHabilidade(who, "Maldicao do Sangue de Asan"))
+		if (isBloodied(who))
+			amt := cint(amt*0.3);
+		endif
+	endif
+	
+
+	TS_StartTimer(targ, "feebleMind", cint(AP_GetSkill(who, MAGICLORE)), amt, who, 1); //20 min
+	PlaySoundEffect(targ, SFX_SPELL_WEAKEN);
+	SendSysMEssageEx(who, "Voce deixou o alvo mais burro.", SSM_INFO);
+	Corromper(who, 2, targ);
+	
+	return 1;
+endprogram 

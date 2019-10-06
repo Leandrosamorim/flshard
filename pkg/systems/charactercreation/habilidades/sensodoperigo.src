@@ -1,0 +1,27 @@
+ use uo;
+ use os;
+
+include ":attributes:attributes";
+include ":timedScripts:timedScripts";
+include "include/say";
+include "include/sysEvent";
+
+program manobra(who)
+	var nearby := ListHostiles(who, 10);
+	var hostiles := array{};
+	foreach char in nearby
+		if (GetObjProperty(char, "lastHit").attacker != who.serial)
+			hostiles.append(char);
+		endif
+		sleepms(20);
+	endforeach
+	who.concealed := 1;
+	sleepms(50);
+	who.concealed := 0;
+	
+	foreach char in hostiles
+		SendEvent(char, struct{"type":=EVID_TAUNT, "source":=who});
+		sleepms(20);
+	endforeach
+	return 1;
+endprogram  

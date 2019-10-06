@@ -1,0 +1,277 @@
+/* $Id: anatomy.src 834 2005-11-02 14:09:50Z austin $
+ *
+ */
+use uo;
+
+include ":attributes:attributeConstants";
+include ":attributes:attributes";
+include ":attributes:skillCheck";
+include "include/say";
+
+program skill_Anatomy(who)
+
+	EraseObjProperty(who, "IsMeditating");
+	EraseObjProperty(who, "HealTimer");
+
+	SendSysMessageEx(who, "Quem voce deseja examinar?", SSM_REQUEST);
+	var subject := Target(who);
+	// target checks begin here
+	if(!subject)
+		return 0;
+	elseif(subject.serial == who.serial)
+		//PrintTextAbovePrivate(who, "Voce ja conhece o bastante de si mesmo.", who);
+		PrintTextAbovePrivate(subject, "Voce esta " + DPMsg(subject)+".", who);
+			var hunger := CInt(AP_GetVital(subject, "Hunger") / 10);
+			PrintTextAbovePrivate(subject, "Niveis de fome: " + hunger , who);
+		return 0;
+	elseif(subject.graphic == 0x2006)
+		PrintText(who, "*examinando o corpo*");
+		if( SkillCheck(who, MEDICINE, -1) > 0 )
+			if (GetObjProperty(subject, "morto") == 1)
+				SendSysMessageEx(who, "Parece morto para voce.", SSM_INFO);
+				if (valorInicial(who, MEDICINE) == 40);
+					if (GetObjProperty(subject, "WeaponKill"))
+						SendSysMessageEx(who, "O corpo foi morto por: " + GetObjProperty(subject, "WeaponKill"), SSM_INFO);
+					endif
+					if (GetObjProperty(subject, "deathtimer"))
+						SendSysMessageEx(who, "Foi morto a: " + tempoMorto(subject, "deathtimer"), SSM_INFO);
+					endif
+					if (GetObjProperty(subject, "deathdetails"))
+						SendSysMessageEx(who, "Detalhes: " + GetObjProperty(subject, "deathdetails"), SSM_INFO);
+					endif
+				endif
+				return 0;
+			else
+				var mob := SystemFindObjectBySerial(subject.ownerserial);
+				if (mob)
+					if (mob.concealed)
+						SendSysMessageEx(who, "Parece morto para voce.", SSM_INFO);
+						return 0;
+					endif
+				endif
+				SendSysMessageEx(who, "Esta desacordado.", SSM_INFO);
+				return 0;
+			endif
+		else
+			SendSysMessageEx(who, "Voce nao tem certeza...", SSM_FAIL);
+			return 0;
+		endif
+	elseif(subject.objtype == 0xEFFF)
+		PrintText(who, "*examinando os ossos*");
+		if( SkillCheck(who, MEDICINE, -1) > 0 )
+			SendSysMessageEx(who, "Parece inanimado para voce.", SSM_INFO);
+			if (valorInicial(who, MEDICINE) == 40)
+				if (GetObjProperty(subject, "WeaponKill"))
+					SendSysMessageEx(who, "O corpo foi morto por: " + GetObjProperty(subject, "WeaponKill"), SSM_INFO);
+				endif
+				if (GetObjProperty(subject, "deathtimer"))
+					SendSysMessageEx(who, "Foi morto a: " + tempoMorto(subject, "deathtimer"), SSM_INFO);
+				endif
+				if (GetObjProperty(subject, "enterrado"))
+					SendSysMessageEx(who, "Foi enterrado a: " + tempoMorto(subject, "enterrado"), SSM_INFO);
+				endif
+				if (GetObjProperty(subject, "deathdetails"))
+					SendSysMessageEx(who, "Detalhes: " + GetObjProperty(subject, "deathdetails"), SSM_INFO);
+				endif
+			endif
+		else
+			SendSysMessageEx(who, "Voce nao tem certeza...", SSM_FAIL);
+			return 0;
+		endif
+		return;
+	elseif(!subject.isA(POLCLASS_MOBILE))
+		SendSysMessageEx(who, "Alvo invalido.", SSM_FAIL);
+		return 0;
+	endif
+
+	// variables for sys messages
+  	var streng := getStreng(AP_GetStat(subject, "Strength"));
+	var dext := getDext(AP_GetStat(subject, "Dexterity"));
+	//var con := getVit( Cint(GetObjProperty(who, "Vitality") ));
+	var endur_percentage := CInt(CInt(AP_GetVital(subject, "Stamina"))/CDbl(AP_GetVitalMaximumValue(subject, "Stamina"))*100);
+	var endur := getEnd(endur_percentage);
+
+	// adjust succeed and fail msgs here
+	var strMsg, strFail;
+	strMsg := "Essa criatura";
+	strFail := "das caracteristicas fisicas dessa criatura.";
+
+	PrintText(who, "*examinando " + subject.name + "*");
+	if( SkillCheck(who, MEDICINE, -1) > 0 )
+
+		PrintTextAbovePrivate(subject, strMsg+" parece " +streng+ " e " + dext /*+ " e " + con*/ + ".", who);
+		PrintTextAbovePrivate(subject, strMsg + " esta " + endur + " resistencia.", who);
+		//var diagnose := GetDiagnosticStr(subject);
+		//PrintTextAbovePrivate(subject, " " + diagnose ,who);
+		if (subject.acctname)
+			PrintTextAbovePrivate(subject, "O alvo esta " + DPMsg(subject), who);
+			var hunger := CInt(AP_GetVital(subject, "Hunger") / 10);
+			PrintTextAbovePrivate(subject, "Niveis de fome: " + hunger , who);
+		endif
+		return 1;
+	else
+		SendSysMessageEx(who, "Voce nao faz ideia " + strFail, SSM_FAIL);
+		return 0;
+	endif
+
+endprogram
+
+function getStreng(subject)
+	if (subject >= 1000)
+		return "ter forca para mover montanhas";
+	elseif(subject >= 600)
+		return  "ter a forca de um exercito";
+	elseif(subject >= 500)
+		return  "ter forca para derrubar uma muralha";
+	elseif(subject >= 400)
+		return  "ter forca para derrubar uma arvore";
+	elseif(subject >= 300)
+		return  "ter forca de 5 homens";
+	elseif(subject >= 200)
+		return  "ter forca de um gigante";	
+	elseif(subject >= 100)
+		return  "ter forca sobre-humana";
+	elseif(subject >= 99)
+		return "um dos mais fortes que voce ja viu";
+	elseif(subject >= 89)
+		return "forte como um touro";
+	elseif(subject >= 79)
+		return "extraordinariamente forte";
+	elseif(subject >= 69)
+		return "extrememamente forte";
+	elseif(subject >= 59)
+		return "muito forte";
+	elseif(subject >= 49)
+		return "um pouco forte";
+	elseif(subject >= 39)
+		return "ter uma forca normal";
+	elseif(subject >= 29)
+		return "razoavelmente fraca";
+	elseif(subject >= 19)
+		return "muito fraca";
+	else
+		return "ter problemas para erguer ate pequenso objetos";
+	endif
+
+endfunction
+
+
+function getDext(subject)
+
+
+	if(subject >= 100)
+		return "parece ter agilidade sobre-humana";
+	elseif(subject >= 99)
+		return "uma das pessoas mais rapidas que voce ja viu";
+	elseif(subject >= 89)
+		return "agil como mercurio";
+	elseif(subject >= 79)
+		return "extraordinariamente agil";
+	elseif(subject >= 69)
+		return "extremamente agil";
+	elseif(subject >= 59)
+		return "muito agil";
+	elseif(subject >= 49)
+		return "um pouco agil";
+	elseif(subject >= 39)
+		return "moderadamente agil";
+	elseif(subject >= 29)
+		return "meio descoordenado";
+	elseif(subject >= 19)
+		return "muito pouco agil";
+	else
+		return "parece que mal consegue se mover";
+	endif
+
+endfunction
+
+function getVit(subject)
+
+
+	if(subject >= 100)
+		return "parece ter saude sobre-humana";
+	elseif(subject >= 99)
+		return "uma das pessoas mais saudaveis que voce ja viu";
+	elseif(subject >= 89)
+		return "parece que nunca deve ficar doente";
+	elseif(subject >= 79)
+		return "extraordinariamente saudavel";
+	elseif(subject >= 69)
+		return "extremamente saudavel";
+	elseif(subject >= 59)
+		return "muito saudavel";
+	elseif(subject >= 49)
+		return "um pouco saudavel";
+	elseif(subject >= 39)
+		return "moderadamente saudavel";
+	elseif(subject >= 29)
+		return "parece ter a saude comprometida";
+	elseif(subject >= 19)
+		return "parece doentio";
+	else
+		return "";
+	endif
+
+endfunction
+
+function getEnd(subject)
+
+	if(subject >= 100)
+		return "cem por cento";
+	elseif(subject >= 90)
+		return "noventa por cento";
+	elseif(subject >= 80)
+		return "oitenta por cento";
+	elseif(subject >= 70)
+		return "setenta por cento";
+	elseif(subject >= 60)
+		return "sessenta por cento";
+	elseif(subject >= 50)
+		return "cinquenta por cento";
+	elseif(subject >= 40)
+		return "quarenta por cento";
+	elseif(subject >= 30)
+		return "trinta por cento";
+	elseif(subject >= 20)
+		return "vinte por cento";
+	elseif(subject >= 10)
+		return "baixa";
+	else
+		return "muito baixa";
+	endif
+
+endfunction
+
+function DPMsg(who)
+	if (GetObjProperty(who, "morto"))
+		return "morto";
+	endif
+	var DPs := CInt(AP_GetVital(who, "DP") / 10);
+	case (DPs)
+		0: return "morto";
+		1: return "quase morto";
+		2: return "mal";
+		3: return "relativamente bem";
+		4: return "bastante disposto";
+		default: return "bastante disposto";
+		//5: return "preparado para tudo";
+		//6: 7: 8: return "mais do que preparado";
+	endcase	
+endfunction
+
+exported function tempoMorto(character, tipo)// para 10000 deu 292 segundos 300
+    var criadoEm := cint(GetObjProperty(character, tipo));
+    var tempoAgora := polcore().systime;// segundos
+    var tempoDevida:= tempoAgora - criadoEm;
+    var dias := cint(tempoDevida/(86400));//24horas*60minutos*60segundos = 86400 segundos
+	if (dias <= 2)
+		dias := "Ha pouco tempo";
+	elseif (dias > 2 && dias <= 8)
+		dias := "Ha algum tempo";
+	elseif (dias > 8 && dias <= 15)
+		dias := "Ha muito tempo";
+	else
+		dias := "Ha um ano ou mais";
+	endif
+    return dias;
+endfunction

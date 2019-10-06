@@ -1,0 +1,46 @@
+
+use uo;
+
+include ":brainai:npcUtil";
+include ":tn:tngumps";
+include "include/say";
+include ":gumps:yesno";     
+include ":gumps:requestgump";
+include ":combat:weaponInfo";
+include ":charactercreation:habilidades";
+
+
+program removegem(who)
+
+	SendSysMessageEx(who, "Escolha sua arma.", SSM_REQUEST);
+		var targ := Target(who);
+		var sword := targ;
+		var initx := who.x;
+		var inity := who.y;
+		
+			if (!targ || GetObjProperty(targ, "swordmage") != who.serial )
+				return;
+			endif
+			
+		var gems := getobjproperty(targ, "gems");
+		
+			if (!gems)
+				return;
+			endif
+			
+		var alvo := RadioGump(who, 140, 200, "Qual gema voce vai remover", gems.keys());
+		
+		sleep(3);
+		
+		if ((who.x != initx) || (who.y != inity))
+			SendSysMessageEx(who, "Voce desviou sua atencao.", SSM_FAIL);
+			return;
+		endif
+		
+		CreateIteminBackpack(who, gems[alvo].objtype, 1);
+		gems.erase(alvo);
+		SetObjProperty(targ, "gems", gems);
+		SendSysMessageEx(who, "Voce removeu a gema com sucesso.", SSM_FAIL);
+		
+	
+endprogram

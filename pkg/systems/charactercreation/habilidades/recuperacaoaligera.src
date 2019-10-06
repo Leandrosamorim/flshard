@@ -1,0 +1,16 @@
+ use uo;
+
+include ":attributes:attributes";
+include ":timedScripts:timedScripts";
+include "include/say";
+include "include/damage";
+
+program manobra(attacker)
+
+	if (isBloodied(attacker))
+		TS_StartTimer(attacker, "recuperacaoaligera", 60);
+	endif
+
+
+endprogram  
+

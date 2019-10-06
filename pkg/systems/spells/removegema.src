@@ -1,0 +1,28 @@
+use uo;
+
+include "include/say";
+include ":tn:tngumps";
+include "include/say";
+include ":gumps:yesno";     
+include ":gumps:requestgump";
+include ":combat:weaponInfo";
+include ":charactercreation:habilidades";
+
+
+program removegema(who)
+SendSysMessageEx(who, "Escolha sua arma.", SSM_REQUEST);
+		var targ := Target(who);
+		var sword := targ;
+		if (!targ || GetObjProperty(targ, "swordmage") != who.serial )
+			return;
+		endif
+		var gems := getobjproperty(targ, "gems");
+		if (!gems)
+			return;
+		endif
+		var alvo := RadioGump(who, 140, 200, "Qual gema voce vai remover", gems.keys());
+		CreateIteminBackpack(who, gems[alvo].objtype, 1);
+		gems.erase(alvo);
+		SetObjProperty(targ, "gems", gems);
+	
+	endprogram

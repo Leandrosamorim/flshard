@@ -1,0 +1,43 @@
+    use uo;
+use os;
+
+include ":spells:tnmagery";
+include "include/client";
+include "include/sounds";
+include "include/say";
+include "include/damage";
+include ":timedScripts:timedScripts";
+include ":attributes:attributes";
+include ":charactercreation:resists";
+
+program SpellScript(params)
+	var who := params[1];
+	var targ := params[2];
+	params := 0; // No longer needed
+
+
+	if (!GetObjProperty(targ, "#sleep"))
+		SendSysMessageEx(who, "O alvo precisa estar dormindo antes.");
+		return 1;
+	endif
+
+	var dmg := AP_GetSkill(who, MAGICLORE)*0.75;
+
+	if (CheckResist(targ, VONTADE, 80+cint(AP_GetSkill(who, MAGICLORE))))
+		dmg := dmg/2;
+	endif
+
+	if (temHabilidade(who, "Maldicao do Sangue de Asan"))
+		if (isBloodied(who))
+			dmg := cint(dmg*0.3);
+		endif
+	endif
+
+	DamageFLS(targ, dmg, DMG_FORCED, who);
+
+	PlaySoundEffect(who, 385);
+	SendSysMEssageEx(who, "O alvo esta tendo sonhos terriveis.", SSM_INFO);
+	Corromper(who, 31, targ);
+	
+	return 1;
+endprogram 

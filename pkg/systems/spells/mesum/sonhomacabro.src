@@ -1,0 +1,34 @@
+    use uo;
+use os;
+
+include ":spells:tnmagery";
+include "include/client";
+include "include/sounds";
+include "include/say";
+include ":timedScripts:timedScripts";
+include ":attributes:attributes";
+
+program SpellScript(params)
+	var who := params[1];
+	var targ := params[2];
+	params := 0; // No longer needed
+
+
+	var e := TS_StartTimer(targ, "sleep", cint(AP_GetSkill(who, MAGICLORE)/2), 1, who, 0); 
+	if (e == error)
+		printtextabove(who, "sonho " + e);
+	endif
+	PlaySoundEffect(who, 0x658);
+	SendSysMEssageEx(who, "O alvo adormeceu.", SSM_INFO);
+	Corromper(who, 30, targ);
+	PlayObjectCenteredEffect(targ, 0x3C1F, 3, 56);
+	sleep(3);
+
+	while ( GetObjProperty(targ, "#sleep") )
+		PlayObjectCenteredEffect(targ, 0x3C1F, 3, 56);
+		sleep(3);
+	endwhile
+
+	
+	return 1;
+endprogram

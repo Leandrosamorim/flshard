@@ -1,0 +1,37 @@
+    use uo;
+use os;
+
+include ":spells:tnmagery";
+include "include/client";
+include "include/sounds";
+include "include/say";
+include ":timedScripts:timedScripts";
+include ":charactercreation:resists";
+
+program SpellScript(params)
+	var who := params[1];
+	var targ := params[2];
+	params := 0; // No longer needed
+
+	if (!targ.isa(POLCLASS_MOBILE))
+		SendSysMessageEx(who, "Isto nao pode ser alvejado por essa magia.", SSM_FAIL);
+		return;
+	endif	
+
+
+	//var time := (AP_GetSkill(who, MAGERY) + AP_GetSkill(who, MAGICLORE))*2;
+	//sendsysmessage(who, " amt "+ amt);
+
+	if ( !CheckResist(targ, VONTADE, 40+cint(AP_GetSkill(who, MAGICLORE))) )
+		var duration := AP_GetSkill(who, MAGICLORE);
+		TS_StartTimer(targ, "apodrecer", duration, targ.color, who, 0); //20 min
+		Corromper(who, 11, targ);
+		PlaySoundEffect(targ, SFX_SPELL_WEAKEN);
+		Corromper(who, 11, targ);
+	else
+		SendSysMessageEx(who, "O alvo  resistiu a magia.", SSM_FAIL);
+		SendSysMessageEx(targ, "Voce resistiu a magia.", SSM_INFO);
+	endif
+	
+	return 1;
+endprogram 

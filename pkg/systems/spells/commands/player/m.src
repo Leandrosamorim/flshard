@@ -1,0 +1,69 @@
+use uo;
+use os;
+use cfgfile;
+
+include "include/say";
+include ":spells:spellbooks";
+
+program magia(who, spellname)
+
+	SendSysMessage(who, "Iniciando magia");
+	var cfg := ReadConfigFile(":spells:allspells");
+	
+	var elem;
+	var id := 1;
+	var achou := 0;
+	foreach spell in ( GetConfigIntKeys(cfg) )
+		elem := FindConfigElem(cfg, id);
+		if ( GetConfigString(elem, "Name") == spellname)
+			achou := 1;
+			break;
+		endif
+		id := id + 1;
+	endforeach
+
+	if (!achou)
+		SendSysMEssageEx(who, "A magia " + spellname + " nao existe.", SSM_FAIL);
+		return;
+	endif
+
+	SendSysMessage(who, " " + id);
+
+	var spellbook := 0;
+	var booktype;
+	foreach item in ( EnumerateItemsInContainer(who.backpack) )
+		if ( item.objtype == 24832)
+			var serialid := GetObjProperty(item, "serialid");
+			var marked := GetObjProperty(item, "marked");
+			if ((serialid && (serialid == who.serial)) || (!serialid) )
+				if ( (marked && (marked == who.name + " - " + who.acctname)) || (!marked) )
+					var spells := GetObjProperty(item, "spells");
+					foreach s in spells
+						if ( s.id == id)
+							spellbook := 1;
+							booktype := GetBookType(item);
+							break;
+						endif
+					endforeach
+				endif
+			endif
+		endif
+	endforeach
+
+	if ( !spellbook)
+		SendSysMessageEx(who, "Voce nao possui a magia " + spellname + " nos seu grimorio.", SSM_FAIL);
+		return;
+	endif
+		
+
+	var spellinfo := struct;
+	spellinfo.+id := id;
+        var script := Start_Script(":spells:cast_spell", {who, spellinfo, booktype});
+        if ( script.errortext )
+                         SendSysMessage(who, "Error - Could not start spell starter ->"+script.errortext);
+	                 return 0;
+	endif   
+	
+
+
+endprogram

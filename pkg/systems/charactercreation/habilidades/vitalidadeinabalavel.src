@@ -1,0 +1,18 @@
+ use uo;
+
+include ":attributes:attributes";
+include "include/say";
+include ":tn:cooldown";
+include "include/sysEvent";
+include "include/client";
+
+
+program manobra(attacker)
+
+	SendSysMessageEx(attacker, "Nada abala voce.", SSM_INFO);
+
+	SetCooldown(attacker, "vitalidadeinabalavel", cint(AP_GetSkill(attacker, TACTICS)));
+
+endprogram 
+
+
