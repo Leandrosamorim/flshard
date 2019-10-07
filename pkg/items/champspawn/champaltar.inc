@@ -242,9 +242,9 @@ function wipeItemsArray(Items)
 endfunction
 
 function getSpawnLocation(altar)
-	var x := altar.x + ((RandomIntMinMax(-10,10)+1));7
+	var x := altar.x + ((RandomIntMinMax(-10,10)+1));
 	var y := altar.y + ((RandomIntMinMax(-10,10)+1));
-        var z := GetMapInfo(x,y).z;
+    var z := GetMapInfo(x,y).z;
 
 	return {x, y, z};
 endfunction

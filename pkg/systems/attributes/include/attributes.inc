@@ -227,7 +227,7 @@ function GetHP(who)
 	endif
 
 	if (TemHabilidade(who, "Baixo Limiar de Furia"))
-		hp := hp + 80;
+		hp := hp + 100;
 	endif
 
 	hp := hp + Cint(GetObjProperty(who, "hitsmod")) + Cint(GetObjProperty(who, "#hitsmod"));

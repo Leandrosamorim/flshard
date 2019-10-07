@@ -108,17 +108,17 @@ function AddPet(who, serial)
 endfunction
 
 //numero maximo de pets que alguem pode ter
-function GetMaxPEts(who)
+function GetMaxPets(who)
 
-	var skill := AP_GetSkill(who, HANDLEANIMAL);
+	var skill := cint(AP_GetSkill(who, HANDLEANIMAL));
 	var maxpets := 1;
 	
-	if (skill >= 45)
+	if (skill >= 45 && skill < 75)
 	maxpets := maxpets + 1;
-	elseif (skill >= 75)
-	maxpets := maxpets + 1;
+	elseif (skill >= 75 && skill < 90)
+	maxpets := maxpets + 2;
 	elseif (skill >= 90)
-	maxpets := maxpets + 1;
+	maxpets := maxpets + 3;
 	endif
 
 	maxpets := maxpets + cint( GetObjProperty(who, "extrapets") );

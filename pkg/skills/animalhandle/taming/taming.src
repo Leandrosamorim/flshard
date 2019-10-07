@@ -96,7 +96,7 @@ function taming(who)
 	var skill := AP_GetSkill(who, HANDLEANIMAL);
 
 	var bonus := 0;
-//	SendSysMEssage(who, " " + GetNumPets(who) + " " + GetPetCost(targ) + " " + GetMaxPEts(who) );
+//	SendSysMEssage(who, " " + GetNumPets(who) + " " + GetPetCost(targ) + " " + GetMaxPets(who) );
 	if ( !targ.IsA(POLCLASS_NPC) )
 		SendSysMessageEx(who, "Cancelado", SSM_FAIL);
 		return;

@@ -21,6 +21,7 @@ program taunt(who)
 			var event := struct{"type":=EVID_TAUNT, "source":=who};
 			SendEvent(char, event);
         endforeach
+	TS_StartTimer(who, "provocar", 10);
 
 endprogram
 

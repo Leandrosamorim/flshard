@@ -23,8 +23,8 @@ program summontotem(params)
 	params := 0; // No longer needed
 
 	//sendsysmessage(who, " " + GetNumPets(who) );
-	if (GetMaxPEts(who) <= GetNumPets(who) )
-		SendSysMessageEx(who, "Voce tem " + GetNumPets(who) + " criaturas sob seu comando e o maximo sao : " + GetMaxPEts(who)  + "  . "  , SSM_FAIL);
+	if (GetMaxPets(who) <= GetNumPets(who) )
+		SendSysMessageEx(who, "Voce tem " + GetNumPets(who) + " criaturas sob seu comando e o maximo sao : " + GetMaxPets(who)  + "  . "  , SSM_FAIL);
 		return;
 	endif
 	
