@@ -29,22 +29,22 @@ program SpellScript(params)
 	endif
 
 	PlaySoundEffect(who, SFX_SPELL_TELEKINESIS );
+	
+	if (CheckResist(targ, VONTADE, cint(AP_GetSkill(who, MAGICLORE))))
+		SendSysMEssageEx(who, "Voce nota que o alvo nao foi afetado.", SSM_FAIL);
+		SendSysMessageEx(targ, "Voce resistiu a magia.", SSM_INFO);
+	return;
+	endif
+	
+	var location := {targ.x, targ.y, targ.z};
 
 	PlayMovingEffectXYZEx( targ.x, targ.y, targ.z, targ.x, targ.y, targ.z + 60, targ.realm, GFX_LARGE_FIREBALL, 1, 10, 2320);
 	Corromper(who, 27, targ);
 
 	MoveObjectToLocation(targ, 10, 10, 10, targ.realm,  MOVEOBJECT_FORCELOCATION );
+	sleep(120);
+	MoveObjectToLocation(targ, location[1], location[2], location[3], targ.realm,  MOVEOBJECT_FORCELOCATION );
 
-	ApplyRawDamage(targ, 200);
-	ApplyRawDamage(targ, 200);
-	ApplyRawDamage(targ, 200);
-	ApplyRawDamage(targ, 200);
-	ApplyRawDamage(targ, 200);
-	ApplyRawDamage(targ, 200);
-	ApplyRawDamage(targ, 200);
-	ApplyRawDamage(targ, 200);
-	ApplyRawDamage(targ, 200);
-	ApplyRawDamage(targ, 200);
 
 	return 1;
 endprogram     

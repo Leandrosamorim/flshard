@@ -23,7 +23,7 @@ program SpellScript(params)
 
 	var lvl := cint(AP_GetSkill(who, MAGICLORE)/20);
 
-	if (!CheckResist(targ, VONTADE, 60+cint(AP_GetSkill(who, MAGICLORE))))
+	if (!CheckResist(targ, VONTADE, 40+cint(AP_GetSkill(who, MAGICLORE))))
 		TS_StartTimer(targ, "manaPoison", cint(AP_GetSkill(who, MAGICLORE)), lvl);
 		Corromper(who, 23, targ);
 	else

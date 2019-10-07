@@ -13,14 +13,20 @@ program SpellScript(params)
 	var targ := params[2];
 	params := 0; // No longer needed
 
-
+	Corromper(who, 30, targ);
+if (CheckResist(targ, VONTADE, 40+cint(AP_GetSkill(who, MAGICLORE))))
+		SendSysMEssageEx(who, "Voce nota que o alvo nao foi afetado.", SSM_FAIL);
+		SendSysMessageEx(targ, "Voce resistiu a magia.", SSM_INFO);
+	return;
+	endif
+	
 	var e := TS_StartTimer(targ, "sleep", cint(AP_GetSkill(who, MAGICLORE)/2), 1, who, 0); 
 	if (e == error)
 		printtextabove(who, "sonho " + e);
 	endif
 	PlaySoundEffect(who, 0x658);
 	SendSysMEssageEx(who, "O alvo adormeceu.", SSM_INFO);
-	Corromper(who, 30, targ);
+
 	PlayObjectCenteredEffect(targ, 0x3C1F, 3, 56);
 	sleep(3);
 

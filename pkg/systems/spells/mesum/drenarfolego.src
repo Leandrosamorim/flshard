@@ -22,7 +22,7 @@ program SpellScript(params)
 
 	var time := 0;
 	var oldx := who.x;
-	var oldy := who.y;
+	var oldy := who.y;	
 
 	who.frozen := 1;
 
@@ -35,6 +35,13 @@ program SpellScript(params)
 	endif
 
 	Corromper(who, 10, targ);
+	
+	if (CheckResist(targ, VONTADE, 40+cint(AP_GetSkill(who, MAGICLORE))))
+		SendSysMEssageEx(who, "Voce nota que o alvo nao foi afetado.", SSM_FAIL);
+		SendSysMessageEx(targ, "Voce resistiu a magia.", SSM_INFO);
+	return;
+	endif
+	
 	while  (time < 10)
 
 		if ( (who.x != oldx) || (who.y != oldy))

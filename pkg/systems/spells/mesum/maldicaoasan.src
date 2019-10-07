@@ -14,6 +14,7 @@ program SpellScript(params)
 
 	if (!targ.isa(POLCLASS_MOBILE))
 		SendSysMessageEx(who, "Isto nao pode ser alvejado por essa magia.", SSM_FAIL);
+		SendSysMessageEx(targ, "Voce resistiu a magia.", SSM_INFO);
 		return;
 	endif
 
@@ -27,6 +28,12 @@ program SpellScript(params)
 	who.frozen := 1;
 	targ.frozen := 1;
 	Corromper(who, 13, targ);
+	
+	if (CheckResist(targ, VONTADE, 40+cint(AP_GetSkill(who, MAGICLORE))))
+		SendSysMEssageEx(who, "Voce nota que o alvo nao foi afetado.", SSM_FAIL);
+	return;
+	endif
+	
 	while  (time < 10)
 
 		if ( (who.x != oldx) || (who.y != oldy))
