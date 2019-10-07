@@ -3,8 +3,11 @@
 include ":attributes:attributes";
 include ":timedScripts:timedScripts";
 include "include/say";
+include ":combat:combat";
 
-program manobra(attacker)
+program manobra(params)
+var attacker := params[1];
+var defender := params[2];
 
 	var festa := attacker.party;
 
@@ -26,8 +29,13 @@ program manobra(attacker)
 	endforeach
 
 	var selected := testes[RandomInt(testes.size()+1)];
+	
+	if (defender.npctemplate)
 	SetObjProperty(selected, "#attackbonus", 100);
 	SetObjProperty(selected, "#CriticalChance", 100);
+	else
+	SetObjProperty(selected, "#CriticalChance", 100);
+	endif
 
 
 endprogram  
