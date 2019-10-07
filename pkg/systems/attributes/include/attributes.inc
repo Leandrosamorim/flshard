@@ -252,7 +252,7 @@ function GetPH(who)
 	endif
 
 	if (TemHabilidade(who, "Baixo Limiar de Furia"))
-		ph := ph - 80;
+		ph := ph - 100;
 	endif
 
 

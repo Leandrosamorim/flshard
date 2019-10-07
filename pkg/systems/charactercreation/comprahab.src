@@ -66,7 +66,7 @@ program pergrad(who, item)
 				SetObjProperty(who, "fococomarma", targ.objtype);			
 				SendSysMessageEx(who, "Arma escolhida.", SSM_INFO);
 			elseif (escolhida == "Inimigo Predileto")
-				var inimigo := RadioGump(who, 300, 380, "Escolha seu Inimigo Predileto", array{"Dragon","Ogre","Undead","Ratman","Kobold","Minotauro","Magic","GiantAnimal","EvilHuman","Harpy"});
+				var inimigo := RadioGump(who, 300, 380, "Escolha seu Inimigo Predileto", array{"Dragon","Undead","Giants","GiantAnimal","EvilHuman","Goblin"});
 				SetObjProperty(who, "InimigoPredileto", inimigo);
 			elseif (escolhida == "Senso da Natureza")
 				setObjProperty(who, "empatiacomanimais", 1);

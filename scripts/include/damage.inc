@@ -147,6 +147,12 @@ function CalculateDamage(defender, type, dmg)
 				    resistMod := cdbl( defender.resist_poison_mod/100.0);
 		endcase
 	endif
+	
+			if (isBloodied(defender) && TemHabilidade(defender, "Pele de Rocha"))
+			if (resist < 0.5)
+				resist := 0.5;
+			endif
+		endif
 
 	if (type == DMG_PHYSICAL)
 		if (TemHabilidade(defender, "Exoesqueleto"))
