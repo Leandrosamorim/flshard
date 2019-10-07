@@ -26,6 +26,7 @@ program manobra(attacker)
 	endforeach
 
 	var selected := testes[RandomInt(testes.size()+1)];
+	SetObjProperty(selected, "#attackbonus", 100);
 	SetObjProperty(selected, "#CriticalChance", 100);
 
 
