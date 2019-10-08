@@ -70,6 +70,8 @@ function CanFight(me, mobile, align)
   endif
   
   var mycategory := lower(getnpccategory( mytemplate ));
+  		var chardata := GetObjProperty(mobile, "chardata");
+		var povo := chardata.povo;
   
   if (!mobile.npctemplate) //se for player olha a tendencia do npc
     if (align == ALIGN_EVIL) //npcs malignos atacam todos os players
@@ -94,7 +96,12 @@ function CanFight(me, mobile, align)
         endif
       elseif ( (mycategory == "undead") && (GetObjProperty(mobile, "aparenciacadaverica") == 1) )
           return 0;
-
+		  
+		elseif (povo == "Numajene")
+		        if ( (mytemplate == "spiritbear") || (mytemplate == "spiritpanther") || (mytemplate == "spiritserpent") || (mytemplate == "spiritwolf") || (mytemplate == "spiritualbear") || (mytemplate == "phasespider"))
+				return 0;
+				endif
+				
 	  elseif (GetObjProperty(mobile, "unattack"))
 		  return 0;
 
