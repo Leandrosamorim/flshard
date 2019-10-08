@@ -70,13 +70,13 @@ var gfdata := array{
 		"Escolha o povo do seu personagem:", //1
 		"Zharkiano", //2
 		"Asanita",  //3
-		"Thurião",  //4
-		"Vanírio", //5 
+		"ThuriÃ£o",  //4
+		"VanÃ­rio", //5 
 		"Numajene",//6
 		"Aquilrano", //7
 		"Humano", //8
 		"Elfo", //9
-		"Próximo"
+		"PrÃ³ximo"
 		};
 
 	
@@ -155,38 +155,38 @@ var gflayout := array{
 
 var gfdata := array{
 		"Forgotten Lore Shard", //0
-		"Próximo", //1
+		"PrÃ³ximo", //1
 		"Escolha uma vantagem racial:" //2
 		};
 
 
 	if (chardata.raca == "Humano")
 		gfdata.append("Versatilidade");
-		gfdata.append("Homens são movidos pela curiosidade, o que faz com que explorem várias áreas de conhecimento. Começa com +2 pontos de skills.");
+		gfdata.append("Homens sÃ£o movidos pela curiosidade, o que faz com que explorem vÃ¡rias Ã¡reas de conhecimento. ComeÃ§a com +2 pontos de skills.");
 		gfdata.append("Resistentes");
-		gfdata.append("Humanos se adaptam bem a condições adversas por piores que sejam. Ganha +10 em todos os testes de resistências.");
-		gfdata.append("Aprendiz Rápido");
-		gfdata.append("É mais fácil para os homens, do que para as outras raças, aprenderem coisas novas. Regeneração mais rápida de cap.");
+		gfdata.append("Humanos se adaptam bem a condiÃ§Ãµes adversas por piores que sejam. Ganha +10 em todos os testes de resistÃªncias.");
+		gfdata.append("Aprendiz RÃ¡pido");
+		gfdata.append("Ã‰ mais fÃ¡cil para os homens, do que para as outras raÃ§as, aprenderem coisas novas. RegeneraÃ§Ã£o mais rÃ¡pida de cap.");
 		if (chardata.povo  == "Zharkiano")
 			gflayout.append("text 180 490 2105 9");			
 			gflayout.append("Radio 150 487 9726 9729 0 4");
 			gflayout.append("HtmlGump 150 520 330 60 10 3000 0");
 			gfdata.append("Conhecedor do Kitah");
-			gfdata.append("Apenas alguns Zharkianos sabem como utilizar o Kitah da mesma forma que os elfos. Não sofre penalidades usando o Kitah.");
+			gfdata.append("Apenas alguns Zharkianos sabem como utilizar o Kitah da mesma forma que os elfos. NÃ£o sofre penalidades usando o Kitah.");
 		endif
 	elseif ( chardata.raca == "Elfo")
 		gfdata.append("Vontade de Ferro");
-		gfdata.append("Elfos possuem uma grande força de vontade e autocontrole. Ganham +20 nos testes de Vontade.");
+		gfdata.append("Elfos possuem uma grande forÃ§a de vontade e autocontrole. Ganham +20 nos testes de Vontade.");
 		gfdata.append("Sabedoria dos Antigos");
-		gfdata.append("Elfos são mais antigos que os outros povos e aprenderam a dar mais valor ao conhecimento. Habilidades terciárias podem ir até 50%");
+		gfdata.append("Elfos sÃ£o mais antigos que os outros povos e aprenderam a dar mais valor ao conhecimento. Habilidades terciÃ¡rias podem ir atÃ© 50%");
 		gfdata.append("Aliado da Natureza");
-		gfdata.append("O povo élfico possui uma ligação maior com a natureza que os humanos. Animais selvagens não o atacam.");
+		gfdata.append("O povo Ã©lfico possui uma ligaÃ§Ã£o maior com a natureza que os humanos. Animais selvagens nÃ£o o atacam.");
 		if (chardata.povo != "Vanirio")
 			gflayout.append("text 180 490 2105 9");			
 			gflayout.append("Radio 150 487 9726 9729 0 4");
 			gflayout.append("HtmlGump 150 520 330 60 10 3000 0");
 			gfdata.append("Conhecedor da Mesum");
-			gfdata.append("A Mesum foi ensinada aos humanos por Asan, mas alguns elfos a dominam muito bem. Não sofre penalidades usando Mesum.");
+			gfdata.append("A Mesum foi ensinada aos humanos por Asan, mas alguns elfos a dominam muito bem. NÃ£o sofre penalidades usando Mesum.");
 
 		endif
 	endif
@@ -258,10 +258,10 @@ var gflayout := array{
 
 var gfdata := array{
 		"Forgotten Lore Shard", //0
-		"Próximo", //1
+		"PrÃ³ximo", //1
 		"Escolha o Caminho do seu personagem:", //2
 		"Caminho das Armas",
-		"Caminho do Subterfúgio",
+		"Caminho do SubterfÃºgio",
 		"Caminho da Sabedoria"
 		};
 
@@ -330,11 +330,11 @@ function GetSkillValueDesc(skill)
 	if (!skill || skill == error)
 		return "";
 	elseif (skill == 1)
-		return "Terciária";
+		return "TerciÃ¡ria";
 	elseif (skill == 2)
-		return "Secundária";
+		return "SecundÃ¡ria";
 	elseif (skill == 3)
-		return "Primária";
+		return "PrimÃ¡ria";
 	endif	
 
 endfunction
@@ -526,8 +526,8 @@ var gflayout := array{
 
 var gfdata := array{
 		"Forgotten Lore Shard", //0
-		"Próximo", //1
-		"Defina suas skills iniciais, você tem " + skillspoints + " pontos. "//2
+		"PrÃ³ximo", //1
+		"Defina suas skills iniciais, vocÃª tem " + skillspoints + " pontos. "//2
 		};
 
 /*	var cfgatt := AP_GetAttributesCfgFile();
@@ -766,8 +766,8 @@ var gflayout := array{
 
 var gfdata := array{
 		"Forgotten Lore Shard", //0
-		"Próximo", //1
-		"Você pode escolher um  dos kits abaixo:" //2
+		"PrÃ³ximo", //1
+		"VocÃª pode escolher um  dos kits abaixo:" //2
 		};
 
 	var i := 1;
@@ -868,7 +868,7 @@ var gflayout := array{
 
 var gfdata := array{
 		"Forgotten Lore Shard", //0
-		"Próximo", //1
+		"PrÃ³ximo", //1
 		"Compre seu equipamento inicial: " + chardata.credits + " creditos.", //2
 		"Armas",
 		"Armaduras",
@@ -1009,11 +1009,11 @@ var gflayout := array{
 
 var gfdata := array{
 		"Forgotten Lore Shard", //0
-		"Próximo", //1
+		"PrÃ³ximo", //1
 		"Defina seus atributos: " + points + " restantes. ", //2
-		"Força: " ,
+		"ForÃ§a: " ,
 		"Destreza: ", 
-		"Inteligência: ", 
+		"InteligÃªncia: ", 
 		" " + chardata.str,
 		" " + chardata.dex,
 		" " + chardata.int
@@ -1237,11 +1237,11 @@ program createchar(who)
 		capa.color := 2117;
 		SetObjProperty(capa, "description", "Faixa de Defensor de Zharkia de " + who.name + "<BR>");
 		SetObjProperty(capa, "cannotdye", 1);
-		SetObjProperty(capa, "descmod", "Defensor Zharkês");
+		SetObjProperty(capa, "descmod", "Defensor ZharkÃªs");
 		SetName(capa, "Faixa");
 	elseif (chardata.kit == "Shimoriano")
 		var ordem := CreateItemInBackpack(who, 8792, 1);
-		SetName(ordem, "Aurotização de Shimoria para " + who.name);
+		SetName(ordem, "AurotizaÃ§Ã£o de Shimoria para " + who.name);
 		var df := DFOpenDataFile(":tn:shimoria");
 		var elem := df.CreateElement(who.serial);
 		
@@ -1272,7 +1272,7 @@ program createchar(who)
 		var robe := CreateItemInBackpack(who, 0x9945, 1); //bodysash
 		SetObjProperty(robe, "description", "Robe com bordado do simbolo do clero de Zharkia");
 		SetObjProperty(robe, "cannotdye", 1);
-		SetObjProperty(robe, "descmod", "Acólito de Zhark");
+		SetObjProperty(robe, "descmod", "AcÃ³lito de Zhark");
 		createiteminbackpack(who, "runaarmasagrada");
 		createiteminbackpack(who, "runacuraleve");
 		createiteminbackpack(who, "runadescanso");
@@ -1284,16 +1284,16 @@ program createchar(who)
 			who.title_prefix := "Lady";
 		endif
 		var ring := CreateItemInBackpack(who, 0x108a, 1); //ring
-		var NomeDaFamilia := cstr(RequestGump(who, "Escreva o Nome da sua Família"));
+		var NomeDaFamilia := cstr(RequestGump(who, "Escreva o Nome da sua FamÃ­lia"));
 		var FamiliaVassala := cstr(RadioGump(who, 270, 200, "Para quem ira prestar Vassalagem?", array{"Rothenien","Khumardigann","Hivyttain","Zanshirdd"}));
 		if (FamiliaVassala != "Nenhuma")
-			SetObjProperty(ring, "description", "Anel Da Família: " + NomeDaFamilia + "<br> Vassala Dos: " + FamiliaVassala);
+			SetObjProperty(ring, "description", "Anel Da FamÃ­lia: " + NomeDaFamilia + "<br> Vassala Dos: " + FamiliaVassala);
 		else
-			SetObjProperty(ring, "description", "Anel Da Família: " + NomeDaFamilia);
+			SetObjProperty(ring, "description", "Anel Da FamÃ­lia: " + NomeDaFamilia);
 		endif
 		SetObjProperty(ring, "familia", NomeDaFamilia);
-		SetObjProperty(ring, "description", "Anel Da Família: " + NomeDaFamilia + "<br> Vassala Dos: " + FamiliaVassala);
-		SetName(ring, "Anel com Símbolo de Familia");
+		SetObjProperty(ring, "description", "Anel Da FamÃ­lia: " + NomeDaFamilia + "<br> Vassala Dos: " + FamiliaVassala);
+		SetName(ring, "Anel com SÃ­mbolo de Familia");
 	elseif (chardata.kit == "Corpulento")
 		AP_SetTrueStat(who, STRENGTH, chardata.str+10);		
 		AP_SetTrueStat(who, DEXTERITY, chardata.dex-10);
@@ -1305,7 +1305,7 @@ program createchar(who)
 		AP_SetTrueStat(who, DEXTERITY, chardata.dex+10);
 	elseif (chardata.kit == "Escravo Vanirio")
 		setObjProperty(who, "description", "Marca de escravo no rosto");
-		setObjProperty(who, "hitsmod", 10);
+		setObjProperty(who, "hitsmod", 20);
 	elseif (chardata.kit == "Velho")
 		AP_SetTrueStat(who, STRENGTH, chardata.str-10);		
 		AP_SetTrueStat(who, INTELLIGENCE, chardata.int+20);
@@ -1476,7 +1476,7 @@ function ExibeGumpAparencia(who, chardata)
     var result2 := DestroyItem(myhair);
     result := EquipItem(who, newhair);
 
-	if (YesNo(who, "Deseja manter esta aparência?" , "Sim.", "Não."))
+	if (YesNo(who, "Deseja manter esta aparÃªncia?" , "Sim.", "NÃ£o."))
 		return 1;
 	else
 		ExibeGumpAparencia(who, chardata);
