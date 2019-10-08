@@ -38,6 +38,7 @@ program SpellScript(params)
 	if (CheckResist(targ, VONTADE, 40+cint(AP_GetSkill(who, MAGICLORE))))
 		SendSysMEssageEx(who, "Voce nota que o alvo nao foi afetado.", SSM_FAIL);
 		SendSysMessageEx(targ, "Voce resistiu a magia.", SSM_INFO);
+		who.frozen := 0;
 	return;
 	endif
 	

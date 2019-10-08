@@ -135,7 +135,12 @@ program do_poisoning(who)
 		SetObjProperty(the_item, "poisonInfo", poisonInfo);
 		if (the_item.isA(POLCLASS_WEAPON))
 			if (!TemHabilidade(who, "Maximizar Veneno"))
+				if(the_item.hp <= 11);
+				DestroyItem(the_item);
+				SendSysMessageEx(who, "A arma ja estava muito danificada e se quebrou na aplicacao do veneno.", SSM_FAIL);
+			else
 				the_item.hp := the_item.hp - 10;
+				endif
 			endif
 		endif
 	else
