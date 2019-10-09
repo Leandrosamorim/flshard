@@ -86,10 +86,10 @@ var gfdata := array{
 		chardata.+raca := "Humano";
 		chardata.+povo := "Asanita";
 	elseif (2 in ret.keys)
-		if (who.graphic != 400)
-			SendSysMessageEx(who, "Apenas personagens homens podem ser thurioes.", SSM_FAIL);
-			return;
-		endif
+		//if (who.graphic != 400)
+		//	SendSysMessageEx(who, "Apenas personagens homens podem ser thurioes.", SSM_FAIL);
+		//	return;
+		//endif
 		chardata.+raca := "Humano";
 		chardata.+povo := "Thuriao";
 	elseif (3 in ret.keys)

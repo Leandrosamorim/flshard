@@ -22,11 +22,7 @@ program summontotem(params)
 	var spellid := params[3];
 	params := 0; // No longer needed
 
-	//sendsysmessage(who, " " + GetNumPets(who) );
-	if (GetMaxPets(who) <= GetNumPets(who) )
-		SendSysMessageEx(who, "Voce tem " + GetNumPets(who) + " criaturas sob seu comando e o maximo sao : " + GetMaxPets(who)  + "  . "  , SSM_FAIL);
-		return;
-	endif
+
 	
 
 	//Efeito da magia
@@ -35,6 +31,23 @@ program summontotem(params)
 	var cfg  :=  ReadConfigFile(":spells:allspells");
 	var elem := FindConfigElem(cfg, spellid);
 	var template := getConfigString(elem, "npcTemplate");
+	var cfg2 := ReadConfigFile(":brainAI:npcdesc");
+	var npctemplate := template;
+	npctemplate := npctemplate[10, len(npctemplate)-9];
+	cfg2 := cfg2[npctemplate];
+	var petcost := 0;
+	if (!Cint(cfg2.petslot))
+		petcost := 1;
+	else
+		petcost := Cint(cfg2.petslot);
+	endif
+	
+		//sendsysmessage(who, " " + GetNumPets(who) );
+	if (GetMaxPets(who) <= GetNumPets(who) + petcost )
+		SendSysMessageEx(who, "Voce tem " + GetNumPets(who) + " criaturas sob seu comando e o maximo sao : " + GetMaxPets(who)  + "  . "  , SSM_FAIL);
+		return;
+	endif
+
 
 	if (template == error)
 			SendSysMessage(who, "erro ao ler o template" + template);
