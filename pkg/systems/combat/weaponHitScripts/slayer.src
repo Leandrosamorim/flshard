@@ -1,0 +1,34 @@
+use uo;
+use util;
+use vitals;
+
+include "include/damage";
+include "include/client";
+include "include/sounds";
+include ":attributes:vitals";
+include ":attributes:attributes";
+include ":brainAI:npcUtil";
+
+program HitScript(params)
+	var attacker	:= params[1];
+	var defender	:= params[2];
+	var weapon	:= params[3];
+	//var armor	:= params[4];
+	//var basedamage	:= params[5];
+	var rawdamage	:= params[6];
+	params := 0; // Not needed anymore.
+	
+	var slayer := SetObjProperty(weapon, "slayer", 0);
+
+	if (defender.npctemplate)
+		var npctemplate := NPC_ParseTemplateName(defender.npctemplate);
+		var cfg := ReadConfigFile(":brainai:npcdesc");
+		var inimigo := GetObjProperty(weapon, "slayer");
+		if (cfg[npctemplate.template].Category == inimigo)
+			var dmg := rawdamage / 2;
+			DamageFLS(defender, dmg, DMG_FORCED, attacker);
+		endif		
+	endif
+	
+	return 1;
+endprogram

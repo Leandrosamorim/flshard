@@ -22,7 +22,7 @@ function TemRequisito(who, habilidade, msg := 1)
 	foreach req in (requisitos)
 		if (req["kit"]) // Ver se tem Kit!
 			req["kit "] := "";
-			if ((GetObjProperty(who, "chardata")).kit != req)
+			if ((!GetObjProperty(who, "chardata")).kit in (req))
 				if (msg == 1)
 					SendSysMessageEx(who, "Voce nao possui o kit: " + req, SSM_FAIL);
 				endif

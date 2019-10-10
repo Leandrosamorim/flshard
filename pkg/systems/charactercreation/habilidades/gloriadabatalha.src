@@ -30,17 +30,9 @@ var defender := params[2];
 
 	var selected := testes[RandomInt(testes.size()+1)];
 	
-	if (defender.npctemplate)
-	selected.hitchance_mod :=  selected.hitchance_mod +100;
 	SetObjProperty(selected, "#CriticalChance", 100);
 	sleep(5);
 	EraseObjProperty(selected, "CriticalChance");
-	selected.hitchance_mod :=  selected.hitchance_mod -100;
-	else
-	SetObjProperty(selected, "#CriticalChance", 100);
-	sleep(5);
-	EraseObjProperty (selected, "#CriticalChance");
-	endif
 
 
 endprogram  

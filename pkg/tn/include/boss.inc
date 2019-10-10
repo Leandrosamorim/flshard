@@ -264,7 +264,8 @@ function CreateBossStructGump(who, byref boss)
 	else
 		magery := GFTextEntry( chargump, 380, 245, 100, 20, 1150, boss.magery+"");
 	endif
-
+
+
 	GFTextLine(chargump, 50, 240, 1153, "Loot: ");
 	GFAddButton( chargump, 50, 263, 2103, 2104, 1, 10);
 
@@ -279,28 +280,28 @@ function CreateBossStructGump(who, byref boss)
 		endforeach
 	endif
 
-	GFTextLine(chargump, 50, 340, 1153, "Death Events: ");
-	GFAddButton( chargump, 50, 363, 2103, 2104, 1, 20);
+	GFTextLine(chargump, 250, 340, 1153, "Death Events: ");
+	GFAddButton( chargump, 250, 363, 2103, 2104, 1, 20);
 
 	if (boss.deathevent)
 		var y := 0;
 		var i := 0;
 		foreach item in (boss.deathevent)
-			GFAddButton( chargump, 50, 383+y, 2103, 2104, 1, 21+i);
-			GFTextLine(chargump, 60, 360+y, 1150, " " + item.type);
+			GFAddButton( chargump, 250, 383+y, 2103, 2104, 1, 21+i);
+			GFTextLine(chargump, 260, 360+y, 1150, " " + item.type);
 			y := y + 15;
 			i := i + 1;
 		endforeach
 	endif
 
-	GFTextLine(chargump, 250, 340, 1153, "Special: ");
-	GFAddButton( chargump, 250, 363, 2103, 2104, 1, 30);
+	GFTextLine(chargump, 250, 260, 1153, "Special: ");
+	GFAddButton( chargump, 250, 283, 2103, 2104, 1, 30);
 	if (boss.special)
 		var y := 0;
 		var i := 0;
 		foreach item in (boss.special)
-			GFAddButton( chargump, 250, 383+y, 2103, 2104, 1, 31+i);
-			GFTextLine(chargump, 260, 360+y, 1150, " " + item.name);
+			GFAddButton( chargump, 250, 303+y, 2103, 2104, 1, 31+i);
+			GFTextLine(chargump, 260, 280+y, 1150, " " + item.name);
 			y := y + 15;
 			i := i + 1;
 		endforeach
@@ -374,7 +375,7 @@ function CreateBossStructGump(who, byref boss)
 		//SendSysMessage(who, " " + boss + " " );
 		//SendSysMessage(who, " " + boss + " " + Cstr(GFExtractData(input, template)) );
 		return;
-	elseif (input[0] == 10 || input[0] == 11 || input[0] == 12 || input[0] == 13 || input[0] == 14 || input[0] == 15)
+	elseif (input[0] == 10 || input[0] == 11 || input[0] == 12 || input[0] == 13 || input[0] == 14 || input[0] == 15 || input[0] == 16 || input[0] == 17 || input[0] == 18 || input[0] == 19)
 
 		var index := input[0] - 9;
 		//sendsysmessage(who, " " + input[0] + " " + boss.loot[index]);
