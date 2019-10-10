@@ -17,17 +17,22 @@ program HitScript(params)
 	//var basedamage	:= params[5];
 	var rawdamage	:= params[6];
 	params := 0; // Not needed anymore.
+
+	var categorias := array{"Dragon","Undead","Giants","GiantAnimal","EvilHuman","Goblin"};
+	var selected := categorias[RandomIntMinMax(1,6)];
 	
-	var slayer := SetObjProperty(weapon, "slayer", 0);
+	if (!GetObjProperty(weapon, "slayer"))
+		SetObjProperty(weapon, "slayer", selected);
+	endif
 
 	if (defender.npctemplate)
 		var npctemplate := NPC_ParseTemplateName(defender.npctemplate);
 		var cfg := ReadConfigFile(":brainai:npcdesc");
 		var inimigo := GetObjProperty(weapon, "slayer");
-		if (cfg[npctemplate.template].Category == inimigo)
-			var dmg := rawdamage / 2;
-			DamageFLS(defender, dmg, DMG_FORCED, attacker);
-		endif		
+			if (cfg[npctemplate.template].Category == inimigo)
+				var dmg := rawdamage / 2;
+				DamageFLS(defender, dmg, DMG_FORCED, attacker);
+			endif		
 	endif
 	
 	return 1;
