@@ -80,6 +80,12 @@ function CanFight(me, mobile, align)
 			return 0;
 		endif
 	  endif
+	  
+	  	if (povo == "Numajene")
+		        if ( (mytemplate == "spiritbear") || (mytemplate == "spiritpanther") || (mytemplate == "spiritserpent") || (mytemplate == "spiritwolf") || (mytemplate == "spiritualbear") || (mytemplate == "phasespider"))
+				return 0;
+				endif
+		endif
       
       //printtextabove(me, "mytemplate " + mytemplate + " " + cint(GetObjProperty(mobile, "empatiacomanimais"))); 
       if ( (GetObjProperty(mobile, "kit") == "criado por lobos") || (cint(GetObjProperty(mobile, "empatiacomanimais")) == 1) || TemHabilidade(mobile, "Senso da Natureza" )) //verifica se tem empatia por animais
@@ -97,10 +103,7 @@ function CanFight(me, mobile, align)
       elseif ( (mycategory == "undead") && (GetObjProperty(mobile, "aparenciacadaverica") == 1) )
           return 0;
 		  
-		elseif (povo == "Numajene")
-		        if ( (mytemplate == "spiritbear") || (mytemplate == "spiritpanther") || (mytemplate == "spiritserpent") || (mytemplate == "spiritwolf") || (mytemplate == "spiritualbear") || (mytemplate == "phasespider"))
-				return 0;
-				endif
+
 				
 	  elseif (GetObjProperty(mobile, "unattack"))
 		  return 0;

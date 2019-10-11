@@ -12,6 +12,7 @@ include ":attributes:attributes";
 include "include/say";
 include ":tn:cooldown";
 include ":charactercreation:habilidades";
+include ":attributes:advanceCheck";
 
 program death(params)
 
@@ -94,6 +95,8 @@ program death(params)
 				SetObjProperty(corpse, "morto", 1);
 				SetObjProperty(ghost, "morto", 1);
 				SetObjProperty(corpse, "deathtimer", polcore().systime);
+				var dias := (polcore().systime - GetObjProperty(ghost, "createdate"))/2;					
+				FindAccount(ghost.acctname).setprop("mortelog", dias);
 				sleep(5);
 				return 1;
 			endif
@@ -146,6 +149,14 @@ program death(params)
 			SetObjProperty(corpse, "morto", 1);
 			SetObjProperty(ghost, "morto", 1);
 			SetObjProperty(corpse, "deathtimer", polcore().systime);
+			var dias := GetObjProperty(ghost, "createdate");
+			var logs := FindAccount(ghost).getprop("mortelog");
+				if (logs == error)
+				logs := array;
+				endif
+			logs.append(dias);
+			FindAccount(ghost).setprop("mortelog", logs);
+			print("Morreu" + dias + " vai ganhar cap " + dias/2);
 			return 1;
 		endif
 		tempo := tempo - 1;
@@ -164,6 +175,7 @@ endprogram
  * Destroi o corpo
  * Seta os vitals
 */
+
 function RessPlayer(who, corpse)
 
 
