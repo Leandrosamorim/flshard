@@ -142,7 +142,7 @@ function MakePotion ( pot, who)
 				endif
 				if (GetObjProperty(who, "extratoinstantaneo"))
 					SendSysMessageEx(who, "Voce fez um extrato instantaneo.", SSM_INFO);
-					var pocao := GetObjProperty(thing, "pocao");
+					var pocao := GetObjProperty(thing, "extrato");
        					var pot := CreateItemInBackpack(who, pocao, 1);
 					SetObjProperty(pot, "strength", cint(GetObjProperty(thing, "strength")));
 					DestroyItem(thing);
