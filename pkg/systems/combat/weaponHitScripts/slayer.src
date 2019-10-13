@@ -32,7 +32,21 @@ program HitScript(params)
 			if (cfg[npctemplate.template].Category == inimigo)
 				var dmg := rawdamage / 2;
 				DamageFLS(defender, dmg, DMG_FORCED, attacker);
-			endif		
+			endif
+			case(selected)
+			"Dragon":
+			SetObjProperty(weapon, "description", "Empunhadura de osso de draconiano");
+			"Undead":
+			SetObjProperty(weapon, "description", "Empunhadura entalhada num femur");
+			"Giants":
+			SetObjProperty(weapon, "description", "Empunhadura esculpida da falange de um gigante");
+			"GiantAnimal":
+			SetObjProperty(weapon, "description", "Empunhadura decorada com enormes vertebras animais");
+			"EvilHuman":
+			SetObjProperty(weapon, "description", "Empunhadura esculpida num osso humano");
+			"Goblin":
+			SetObjProperty(weapon, "description", "Empunhadura entelhada num osso goblinoide");
+			endcase
 	endif
 	
 	return 1;

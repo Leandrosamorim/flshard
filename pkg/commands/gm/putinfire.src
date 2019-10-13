@@ -37,9 +37,9 @@ function PutFire(targ)
 	endif
 	
 	var fogo := CreateItemAtLocation( targ.x, targ.y, targ.z, objtype, 1, targ.realm );
-	sleep(120);
+	sleep(80);
 	if (fogo)
-		DestroyItem(fogo);
+		Alastrar(fogo);
 		var Itens := ListItemsNearLocation( targ.x, targ.y, targ.z, 1, targ.realm);
 		if (RandomInt(2) == 1)
 			PrintTextAbove(targ, "*Objeto foi destruido pelo fogo*");
@@ -55,10 +55,52 @@ function PutFire(targ)
 			SetName(targ, "" + name + " Queimado");
 		endif
 		if (Itens[1])
-			if (RandomInt(3) == 1)
 				PutFire(Itens[RandomInt(Itens.Size())]);
-			endif
 		endif
+		sleep(20);
+				DestroyItem(fogo);
 	endif
 
+endfunction
+
+function Alastrar(fogo)
+
+	var objtype;
+	if (RandomInt(2) == 1)
+		objtype := RandomIntMinMax(14732,14737);
+	else
+		objtype := RandomIntMinMax(14742,14747);
+		if (objtype == 14744)
+			objtype := 14742;
+		endif
+	endif
+	
+	var i := RandomInt(4);
+	var fogo2;
+	
+	case(i)
+	1:
+	fogo2 := CreateItemAtLocation( fogo.x+1, fogo.y+1, fogo.z, objtype, 1, fogo.realm );
+	2:
+	fogo2 := CreateItemAtLocation( fogo.x+1, fogo.y-1, fogo.z, objtype, 1, fogo.realm );
+	3:
+	fogo2 := CreateItemAtLocation( fogo.x-1, fogo.y+1, fogo.z, objtype, 1, fogo.realm );
+	4:
+	fogo2 := CreateItemAtLocation( fogo.x-1, fogo.y-1, fogo.z, objtype, 1, fogo.realm );
+	endcase
+	
+	PrintTextAbove(fogo2, "*Pegando fogo*");
+	sleep(80);
+	
+	if (fogo2)
+		Alastrar(fogo2);
+		var itens := ListItemsNearLocation(fogo2.x, fogo2.y, fogo2.z, 1, fogo2.realm);
+			if (Itens[1])
+				PutFire(Itens[RandomInt(Itens.Size())]);
+			endif
+		sleep(20);
+		DestroyItem(fogo2);
+
+	endif
+	
 endfunction

@@ -17,12 +17,7 @@ program DeathScript(params)
 	var pieces := array
 	{
 		0x1AE1,
-		0x1B11,
-		0x1B13,
-		0x1B15,
 		0x1B17,
-		0x1B19,
-		0x1B1B,
 		0xF7E
 	};
 

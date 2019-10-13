@@ -14,6 +14,11 @@ function summon(template, targ,  mage)
 	undead.script := ":ghaia:tamed";
 	undead.facing := mage.facing;
 	RestartScript(undead);
+	
+		if(undead.name == "Globo de Luz")
+				var light := CreateItemAtLocation(targ.x, targ.y, targ.z, 0xa22, 1, targ.realm);
+				var equip := EquipItem( undead, light.serial );
+		endif
 				
 
 return undead;
