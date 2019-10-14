@@ -141,7 +141,7 @@ function examinarArea(who)
 
 	foreach item in ListItemsNearLocation(who.x, who.y, who.z, range)
 		if ( item.invisible )
-			if ( item.isTrap() || item.objtype == 0xfc0 )
+			if ( item.isTrap())
 				if ( SkillCheck(who, AWARENESS, -1) > 0 )
 					found := found+1;
 					item.invisible := 0;
