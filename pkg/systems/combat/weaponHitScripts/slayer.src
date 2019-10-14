@@ -45,7 +45,7 @@ program HitScript(params)
 			"EvilHuman":
 			SetObjProperty(weapon, "description", "Empunhadura esculpida num osso humano");
 			"Goblin":
-			SetObjProperty(weapon, "description", "Empunhadura entelhada num osso goblinoide");
+			SetObjProperty(weapon, "description", "Empunhadura entalhada num osso goblinoide");
 			endcase
 	endif
 	
