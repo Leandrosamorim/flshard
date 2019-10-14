@@ -7,6 +7,7 @@ include "include/say";
 include ":attributes:attributes";
 include "include/damage";
 include ":charactercreation:resists";
+include ":taming:taming";
 
 program cordasubir(who,item)
 	
@@ -28,6 +29,7 @@ program cordasubir(who,item)
 	
 	var i;
 	var j := GetObjProperty(item, "direcao");
+	var pets := ListPetsNear(who, 4);
 	
 	for (i := 0;  i <= 5; i := i+1)
 	
@@ -55,9 +57,15 @@ program cordasubir(who,item)
 			if (CheckResist(who, REFLEXOS, 90))
 				SendSysMessageEx(who, "Voce solta a corda e aterriza com leveza", SSM_FAIL);
 				MoveObjectToLocation(who, dest.x, dest.y, dest.z, dest.realm, MOVEOBJECT_FORCELOCATION);
+				foreach pet in pets
+				MoveObjectToLocation(pet, dest.x, dest.y, dest.z, dest.realm, MOVEOBJECT_FORCELOCATION);
+				endforeach
 			else
 			
 			MoveObjectToLocation(who, dest.x, dest.y, dest.z, dest.realm, MOVEOBJECT_FORCELOCATION);
+			foreach pet in pets
+				MoveObjectToLocation(pet, dest.x, dest.y, dest.z, dest.realm, MOVEOBJECT_FORCELOCATION);
+			endforeach
 			SendSysMessageEx(who, "Voce se moveu e soltou da corda!", SSM_FAIL);
 			DamageFLS(who, cInt(dmg/i));
 		endif
@@ -74,6 +82,9 @@ program cordasubir(who,item)
 	else
 	
 	MoveObjectToLocation(who, dest.x, dest.y, dest.z, dest.realm, MOVEOBJECT_FORCELOCATION);
+		foreach pet in pets
+			MoveObjectToLocation(pet, dest.x, dest.y, dest.z, dest.realm, MOVEOBJECT_FORCELOCATION);
+		endforeach
 	
 	endif
 	

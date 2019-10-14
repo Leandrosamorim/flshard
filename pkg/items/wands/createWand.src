@@ -6,7 +6,7 @@ program createWand(wand)
 
 
 	var spellinfo := struct;
-	var cfg := ReadConfigFile(":tn:config/tnspells");
+	var cfg := ReadConfigFile(":spells:config/tnspells");
 	var keys := GetConfigIntKeys(cfg);
 
 	spellinfo.+id := RandomInt(keys.size())+1;
