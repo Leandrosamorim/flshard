@@ -13,7 +13,7 @@ program createWand(wand)
 	SetObjProperty(wand, "spellinfo", spellinfo);
 
 	SetObjProperty(wand, "magic", 1);
-	SetObjProperty(wand, "cargas", RandomIntMinMax(10,20));
+	SetObjProperty(wand, "cargas", RandomIntMinMax(3,10));
 	SetObjProperty(wand, "cancast", 1);
 
 endprogram

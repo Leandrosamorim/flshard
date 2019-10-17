@@ -176,7 +176,7 @@ program MainHitScript( params )
 		endif
 
 		total := CalculateTotalDamage(defender, basedamage, attacker, dmgList);
-		if (GetObjPRoperty(attacker, "#ignorardefesas") > 1);
+		if (GetObjPRoperty(attacker, "#ignorardefesas") >= 1);
 			 var ignr := getObjPRoperty(attacker, "#ignorardefesas");
 			ignr := ignr - 1;
 			if (ignr <= 0)
