@@ -52,7 +52,7 @@ function GetResist(who, resist)
 		endif
 		
 		if (temHabilidade(who, "Treinamento Vigilante"))
-			valor := valor + 40;
+			valor := valor + 100;
 		endif
 
 		if ( GetCooldown(who, "VontadeIndomavel"))
