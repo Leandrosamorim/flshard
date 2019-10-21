@@ -42,7 +42,7 @@ program PlantSeed(who, seed)
 	cfg := cfg[seed.objtype];
 	var difficulty := cfg.PlantDifficulty;
 	
-	if ( SkillCheck(who, WOMENSWORK, difficulty) > 0 )
+	if ( SkillCheck(who, DomesticWork, difficulty) > 0 )
 		var grower := CreateItemAtLocation(who.x, who.y, who.z+1, GROWTH_UNIT, 1);
 		grower.SetGrowerType(seed.objtype);
 		SendSysMessage(who, "Voce plantou a semente.");

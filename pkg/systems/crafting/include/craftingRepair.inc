@@ -29,8 +29,8 @@ var ver_reparos:=0;
 
 if (craft_skill == METALWORKING)
 	cfg := ReadConfigFile(":metalworking:blacksmithy");
-elseif (craft_skill == WOMENSWORK)
-	cfg := ReadConfigFile(":womenswork:tailoring");
+elseif (craft_skill == DomesticWork)
+	cfg := ReadConfigFile(":DomesticWork:tailoring");
 elseif (craft_skill == WOODWORKING)
 	cfg := ReadConfigFile(":woodworking:carpentry");
 else
@@ -170,7 +170,7 @@ function CreateRepairDeed(who, scroll, craft_skill)
      METALWORKING: 		type := "Blacksmith"; color := CInt(2107);
      WOODWORKING: 	type := "Bowyer"; color := CInt(2116);
      //CARPENTRY: 		type := "Carpenter"; color := CInt(2113);
-     WOMENSWORK: 		type := "Tailor"; color := CInt(2128);
+     DomesticWork: 		type := "Tailor"; color := CInt(2128);
   endcase
   var ramt := AP_GetSkill(who, craft_skill);
   if(ramt < 50)
@@ -241,7 +241,7 @@ function repair_this(who, craft_skill := METALWORKING)
   var forge := 0;
   case(craft_skill)
      METALWORKING: forge := 1;
-     WOMENSWORK: 
+     DomesticWork: 
 	if (is_tailor_item(use_on.objtype)) 
 		repair_item( who, use_on, craft_skill);
 	else 
@@ -296,7 +296,7 @@ function is_weapon_armor(what)
 endfunction
 
 function is_tailor_item(what)
-  var tailorcfg := ReadConfigFile(":womenswork:tailoring");
+  var tailorcfg := ReadConfigFile(":DomesticWork:tailoring");
   var elem := FindConfigElem(tailorcfg, what);
   //var repairable := GetConfigInt(elem, "repairable");  
   if (elem )

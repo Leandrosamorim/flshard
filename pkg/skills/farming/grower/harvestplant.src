@@ -42,7 +42,7 @@ function HarvestPlant(who, grower)
 	grower.SetProduceAmount(grower.GetProduceAmount()-1);
 	
 	SendSysMessage(who, "dificuldade " + difficulty);
-	if ( SkillCheck(who, WOMENSWORK, difficulty) > 0 )
+	if ( SkillCheck(who, DomesticWork, difficulty) > 0 )
 		CreateItemInBackPack(who, grower.GetProduceType(), 1);
 		SendSysMessage(who, "Voce guardou os frutos na sua mochila.");
 		var seed_chance := grower.GetSeedDice();

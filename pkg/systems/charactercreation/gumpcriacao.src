@@ -361,7 +361,7 @@ function GumpSkills(who, byref chardata, byref skillspoints)
 
 		foreach skill in quaternarias
 			if ( (skill != "Survival") && (skill != "HandleAnimal") && (skill != "Alchemy") 
-			&& (skill != "WomensWork") && (skill != "MetalWorking") && (skill != "WoodWorking")
+			&& (skill != "DomesticWork") && (skill != "MetalWorking") && (skill != "WoodWorking")
 			&& (skill != "Gathering") )
 				novasquaternarias.append(skill);
 			endif
@@ -370,7 +370,7 @@ function GumpSkills(who, byref chardata, byref skillspoints)
 
 		foreach skill in terciarias
 			if ( (skill != "Survival") && (skill != "HandleAnimal") && (skill != "Alchemy") 
-			&& (skill != "WomensWork") && (skill != "MetalWorking") && (skill != "WoodWorking")
+			&& (skill != "DomesticWork") && (skill != "MetalWorking") && (skill != "WoodWorking")
 			&& (skill != "Gathering") )
 				novasquaternarias.append(skill);
 			endif
@@ -379,7 +379,7 @@ function GumpSkills(who, byref chardata, byref skillspoints)
 
 		foreach skill in secundarias
 			if ( (skill != "Survival") && (skill != "HandleAnimal") && (skill != "Alchemy") 
-			&& (skill != "WomensWork") && (skill != "MetalWorking") && (skill != "WoodWorking")
+			&& (skill != "DomesticWork") && (skill != "MetalWorking") && (skill != "WoodWorking")
 			&& (skill != "Gathering") )
 				novasterciarias.append(skill);
 			endif
@@ -388,7 +388,7 @@ function GumpSkills(who, byref chardata, byref skillspoints)
 
 		foreach skill in primarias
 			if ( (skill != "Survival") && (skill != "HandleAnimal") && (skill != "Alchemy") 
-			&& (skill != "WomensWork") && (skill != "MetalWorking") && (skill != "WoodWorking")
+			&& (skill != "DomesticWork") && (skill != "MetalWorking") && (skill != "WoodWorking")
 			&& (skill != "Gathering") )
 				novasterciarias.append(skill);
 			endif
@@ -402,7 +402,7 @@ function GumpSkills(who, byref chardata, byref skillspoints)
 		secundarias.append("Survival");
 		secundarias.append("HandleAnimal");
 		secundarias.append("Alchemy");
-		primarias.append("WomensWork");
+		primarias.append("DomesticWork");
 		primarias.append("MetalWorking");
 		primarias.append("WoodWorking");
 		primarias.append("Gathering");
@@ -411,7 +411,7 @@ function GumpSkills(who, byref chardata, byref skillspoints)
 		foreach skill in quaternarias //limpa as que vao ser primarias e sec
 			sendsysmessage(who, "skill " + skill);
 			if ( (skill == "Survival") || (skill == "HandleAnimal") || (skill == "Alchemy") 
-			|| (skill == "WomensWork") || (skill == "MetalWorking") || (skill == "WoodWorking")
+			|| (skill == "DomesticWork") || (skill == "MetalWorking") || (skill == "WoodWorking")
 			|| (skill == "Gathering") )
 
 				sendsysmessage(who, "deletando skill " + skill);
@@ -427,7 +427,7 @@ function GumpSkills(who, byref chardata, byref skillspoints)
 		foreach skill in terciarias //limpa as que vao ser primarias e sec
 			sendsysmessage(who, "skill " + skill);
 			if ( (skill == "Survival") || (skill == "HandleAnimal") || (skill == "Alchemy") 
-			|| (skill == "WomensWork") || (skill == "MetalWorking") || (skill == "WoodWorking")
+			|| (skill == "DomesticWork") || (skill == "MetalWorking") || (skill == "WoodWorking")
 			|| (skill == "Gathering") )
 
 				sendsysmessage(who, "deletando skill " + skill);

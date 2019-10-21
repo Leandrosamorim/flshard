@@ -23,7 +23,7 @@ program catarminhoca(who, dirt)
 	return 0;
 	endif 
 
-	var currentskill := AP_GetSkill(who, WOMENSWORK);
+	var currentskill := AP_GetSkill(who, DomesticWork);
 	var randomskill := RandomInt(cint(currentskill)) + 1;
 	var minhocachance := ((currentskill) + (randomskill / 2));
 	var randomchance := RandomInt(100) + 1;

@@ -42,7 +42,7 @@ enum SKILLS
 	
 	METALWORKING		:= "MetalWorking",
 	WOODWORKING		:= "WoodWorking",
-	WOMENSWORK		:= "WomensWork",
+	DomesticWork		:= "DomesticWork",
 	GATHERING		:= "Gathering",
 	HANDLEANIMAL		:= "HandleAnimal",
 

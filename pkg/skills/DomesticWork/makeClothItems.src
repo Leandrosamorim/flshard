@@ -12,7 +12,7 @@ include ":fls_core:fls_crafting";
 include "include/say";
 
 var item_config     := ReadConfigFile(":*:itemdesc");
-var craft_config    := ReadConfigFile(":womenswork:tailoring");
+var craft_config    := ReadConfigFile(":DomesticWork:tailoring");
 
 program use_SmithTool(who, tool)
 
@@ -71,7 +71,7 @@ function makeTailoringItems(who, what, amt, tool)
 
 		foreach item in (items)
 			if (item.objtype == 0x14F8) // Corda
-				SetObjProperty(item, "diff", CInt(AP_GetSkill(who, WOMENSWORK)+20));
+				SetObjProperty(item, "diff", CInt(AP_GetSkill(who, DomesticWork)+20));
 			endif
 		endforeach
 
