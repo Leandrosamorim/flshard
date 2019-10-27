@@ -8,7 +8,6 @@ include ":charactercreation:habilidades";
 
 function SpellYesNo(who, nome, targname)
 	
-	GfCloseGumpTimed(who, GetPid(), 11);
 
 	var gump := GfCreateGump(140, 100);
 	GfResizePic(gump, 0, 0, 0x53 ,200, 140);

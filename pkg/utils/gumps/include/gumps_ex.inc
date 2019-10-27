@@ -27,7 +27,7 @@ CONST ALIGN_CENTER	:= 0x1;
 CONST ALIGN_RIGHT	:= 0x2;
 
 function GFCloseGumpTimed(mobile, pid, timer, ret_val:=0)
-	return Start_Script(":gumps:autoClose", array{mobile, pid, timer, ret_val});
+	return;
 endfunction
 
 function GFHtmlShadowed(byref gump, x, y, width, height, color, text, size := 5);

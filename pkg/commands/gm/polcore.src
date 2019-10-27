@@ -69,4 +69,5 @@ program my_use( chr )
 	print("verstr "+PolCore().verstr);
 
 	print("FIM ################################################################");
+	PolCore().log_profile(1);
 endprogram

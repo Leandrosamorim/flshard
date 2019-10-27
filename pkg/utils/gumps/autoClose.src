@@ -10,8 +10,4 @@ program cCloseGump(params)
 	var timer	:= params[3];
 	var ret_val	:= params[4];
 	params := 0; // Not needed anymore.
-
-	Sleep(CInt(timer));
-
-	GFCloseGumpTimed(mobile, pid, ret_val);
 endprogram
