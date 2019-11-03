@@ -211,16 +211,25 @@ program MainHitScript( params )
 				SetObjProperty(defender, "#CriticalChance", 100);
 				defender.attack_once(attacker);
 			endif
-			if ( temHabilidade(attacker, "Golpes Amplos"))
-				var inimigos := ListHostiles(attacker, 1, LH_FLAG_LOS);
-				var gadmg := cint(total - AP_GetVital(defender, HITS));
-				if (gadmg > 15)
-					gadmg := 15;
-				endif
-				foreach inimigo in inimigos
-					DamageFLS(inimigo, gadmg, DMG_FORCED, attacker);
+			if ( GetCooldown(attacker, "golpesamplos") )
+			var inimigos := ListHostiles(attacker, 1, LH_FLAG_LOS);
+			foreach inimigo in inimigos
+				DamageFLS(inimigo, cint(total/3), DMG_PHYSICAL, attacker);
+			endforeach
+			
+			var pt := attacker.party;
+			
+			if (pt)
+				foreach member in (pt.members)
+					var inimigospt := ListHostiles(member, 1, LH_FLAG_LOS);
+					if(Distance(attacker, member) < 4 && Distance(attacker, inimigospt) == 1)
+						DamageFLS(inimigospt, cint(total/3), DMG_PHYSICAL, attacker);
+					endif
 				endforeach
 			endif
+						
+
+		endif 
 
 		//	if ( temHabilidade(attacker, "Assassinato Horrorizante") )
 		//		SetCooldown(attacker, "evasion_chance", 20);
