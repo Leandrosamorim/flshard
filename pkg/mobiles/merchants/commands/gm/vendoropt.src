@@ -60,9 +60,14 @@ program vendoropt(who)
 	else
 		opt.append(0);
 	endif
+	if ( GetObjProperty(targ, "faccao") )
+	opt.append(1);
+	else
+	opt.append(0);
+	endif
 
 	
-	var result := CheckBoxGump(who, 300, 235, "Opcoes do Vendor", {"Secreto", "Kit Artifice", "Sem Limite Minimo de 10", "Apenas GM vende", "Apenas Um Player Vende", "Alterar Mensagens de Compra", "Cofre", "Taxa"}, opt);
+	var result := CheckBoxGump(who, 300, 235, "Opcoes do Vendor", {"Secreto", "Kit Artifice", "Sem Limite Minimo de 10", "Apenas GM vende", "Apenas Um Player Vende", "Alterar Mensagens de Compra", "Cofre", "Taxa", "Faccao"}, opt);
 
 	EraseObjProperty(targ, "secret");
 	EraseObjProperty(targ, "onlyartifice");
@@ -105,6 +110,9 @@ program vendoropt(who)
 		elseif ( r == "Taxa")
 			var taxa := cint(RequestGump(who, "Insira a taxa cobrada em porcentagem [somente numeros inteiros]"));
 			SetObjProperty(targ, "taxap", taxa);
+		elseif ( r == "faccao")
+			var faccao := RequestGump(who, "Insira a faccao deste npc");
+			SetObjProperty(targ, "faccao", faccao);
 			endif
 
 	endforeach

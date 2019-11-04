@@ -52,11 +52,6 @@ program backstab(who)
 		if ( !CanBackStab(who, weapon) )
 			return;
 		else
-			if ( GetObjProperty(who, "ataquefurtivoaprimorado") == 1 )
-				EraseObjProperty(who, "ataquefurtivoaprimorado");
-			else
-				who.hidden := 0;
-			endif
 			sleepms(100);
 			
 			if ( weaponBow)
@@ -89,6 +84,12 @@ program backstab(who)
 			endif
 			EraseObjProperty(who, "backstab");
 			SendSysMessage(who, "Voce acertou seu alvo!");
+			if ( GetObjProperty(who, "ataquefurtivoaprimorado") == 1 )
+				EraseObjProperty(who, "ataquefurtivoaprimorado");
+				who.hidden := 1;
+			else
+				who.hidden := 0;
+			endif
 		endif
 	else
 		SendSysMessage(who, "Voce deve ficar atras de " + targ.name);
