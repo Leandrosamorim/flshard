@@ -133,6 +133,13 @@ program MainHitScript( params )
 		if(getobjproperty(defender, "apodrecer"))
 			basedamage := Cint(basedamage * 1.2);
 		endif
+		
+		if (getObjProperty(defender, "#alvomovel") == 1)
+			EraseObjProperty(defender, "#alvomovel");
+			var hostiles := ListHostiles(defender, 2);
+			var targ := hostiles[RandomInt(hostiles.size())+1 ];
+			defender := hostiles[targ];
+		endif
 
 		var dmgList := dictionary;
 		dmgList := getNewDamageList(attacker);
@@ -176,7 +183,7 @@ program MainHitScript( params )
 		endif
 
 		total := CalculateTotalDamage(defender, basedamage, attacker, dmgList);
-		if (GetObjPRoperty(attacker, "#ignorardefesas") >= 1);
+		if (GetObjPRoperty(attacker, "#ignorardefesas") > 1);
 			 var ignr := getObjPRoperty(attacker, "#ignorardefesas");
 			ignr := ignr - 1;
 			if (ignr <= 0)
@@ -203,9 +210,11 @@ program MainHitScript( params )
 			
 			if (pt)
 				foreach member in (pt.members)
+					if(Distance(member, attacker) < 3)
 					var inimigospt := ListHostiles(member, 1, LH_FLAG_LOS);
-					if(Distance(attacker, member) < 4 && Distance(attacker, inimigospt) == 1)
-						DamageFLS(inimigospt, cint(total/3), DMG_PHYSICAL, attacker);
+						if(Distance(attacker, inimigospt) == 1)
+							DamageFLS(inimigospt, cint(total/3), DMG_PHYSICAL, attacker);
+						endif
 					endif
 				endforeach
 			endif
@@ -223,25 +232,16 @@ program MainHitScript( params )
 				SetObjProperty(defender, "#CriticalChance", 100);
 				defender.attack_once(attacker);
 			endif
-			if ( GetCooldown(attacker, "golpesamplos") )
-			var inimigos := ListHostiles(attacker, 1, LH_FLAG_LOS);
-			foreach inimigo in inimigos
-				DamageFLS(inimigo, cint(total/3), DMG_PHYSICAL, attacker);
-			endforeach
-			
-			var pt := attacker.party;
-			
-			if (pt)
-				foreach member in (pt.members)
-					var inimigospt := ListHostiles(member, 1, LH_FLAG_LOS);
-					if(Distance(attacker, member) < 4 && Distance(attacker, inimigospt) == 1)
-						DamageFLS(inimigospt, cint(total/3), DMG_PHYSICAL, attacker);
-					endif
+			if ( temHabilidade(attacker, "Golpes Amplos"))
+				var inimigos := ListHostiles(attacker, 1, LH_FLAG_LOS);
+				var gadmg := cint(total - AP_GetVital(defender, HITS));
+				if (gadmg > 15)
+					gadmg := 15;
+				endif
+				foreach inimigo in inimigos
+					DamageFLS(inimigo, gadmg, DMG_FORCED, attacker);
 				endforeach
 			endif
-						
-
-		endif 
 
 		//	if ( temHabilidade(attacker, "Assassinato Horrorizante") )
 		//		SetCooldown(attacker, "evasion_chance", 20);
@@ -250,13 +250,6 @@ program MainHitScript( params )
 
 		if ( GetCooldown(attacker, "aleijar") > 0)
 			AP_ConsumeVital(defender, STAMINA, total);
-		endif
-
-		if (getObjProperty(defender, "#alvomovel") == 1)
-			EraseObjProperty(defender, "#alvomovel");
-			var hostiles := ListHostiles(defender, 2);
-			var targ := hostiles[RandomInt(hostiles.size())+1 ];
-			defender := hostiles[targ];
 		endif
 
 		if (TemHabilidade(defender, "Trapacear a Morte") && (AP_GetVital(defender, HITS) < total))
@@ -711,10 +704,10 @@ function PoisonChecks(attacker, defender, weapon, armor, basedamage, rawdamage)
 		return 0;
 	endif
 	if (GetObjProperty(weapon, "ammo"))
-	var aljavas := array{0x791c, 0x2fb7};
+	var aljavas := array{0x7911, 0x2fb7};
 	var aljava := GetEquipmentByLayer(attacker, LAYER_CAPE);
 	
-		if (aljava.objtype in aljavas)
+		if (aljava in aljavas)
 			var aljava := GetEquipmentByLayer(attacker, LAYER_CAPE);
 		else
 			aljava := GetEquipmentByLayer(attacker, LAYER_WAIST);
