@@ -718,20 +718,24 @@ endfunction
     
 function CastSummon(me, spell)
   if (spell == "summonundead")
-  var npc;
-	for x=0 to 3
-		npc := CreateNpcFromTemplate(":brainai:skeleton3", me.x, me.y, me.z, 0, me.realm);
+	for x := 0 to 3
+		var npc := CreateNpcFromTemplate(":brainai:skeleton3", me.x, me.y, me.z, 0, me.realm);
+		SetObjProperty(npc, "summoned", 1);
 	endfor
 	elseif ( spell == "summonfire" )
-		npc := CreateNpcFromTemplate(":brainai:fireelemental", me.x, me.y, me.z, 0, me.realm);
+		var npc := CreateNpcFromTemplate(":brainai:fireelemental", me.x, me.y, me.z, 0, me.realm);
+		SetObjProperty(npc, "summoned", 1);
 	elseif ( spell == "summonair")
-		npc := CreateNpcFromTemplate(":brainai:airelemental", me.x, me.y, me.z, 0, me.realm);
+		var npc := CreateNpcFromTemplate(":brainai:airelemental", me.x, me.y, me.z, 0, me.realm);
+		SetObjProperty(npc, "summoned", 1);
 	elseif ( spell ==  "summonearth")
-		npc := CreateNpcFromTemplate(":brainai:earthelemental", me.x, me.y, me.z, 0, me.realm);
+		var npc := CreateNpcFromTemplate(":brainai:earthelemental", me.x, me.y, me.z, 0, me.realm);
+		SetObjProperty(npc, "summoned", 1);
 	elseif ( spell ==  "summonice")
-		npc := CreateNpcFromTemplate(":brainai:snowelemental", me.x, me.y, me.z, 0, me.realm);
+		var npc := CreateNpcFromTemplate(":brainai:snowelemental", me.x, me.y, me.z, 0, me.realm);
+		SetObjProperty(npc, "summoned", 1);
 	endif
-  SetObjProperty(npc, "summoned", 1);
+
 endfunction
 
 function CastHeal(me, cast_on)

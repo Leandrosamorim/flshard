@@ -198,8 +198,20 @@ program MainHitScript( params )
 			foreach inimigo in inimigos
 				DamageFLS(inimigo, cint(total/3), DMG_PHYSICAL, attacker);
 			endforeach
+			
+			var pt := attacker.party;
+			
+			if (pt)
+				foreach member in (pt.members)
+					var inimigospt := ListHostiles(member, 1, LH_FLAG_LOS);
+					if(Distance(attacker, member) < 4 && Distance(attacker, inimigospt) == 1)
+						DamageFLS(inimigospt, cint(total/3), DMG_PHYSICAL, attacker);
+					endif
+				endforeach
+			endif
+						
 
-		endif 
+		endif  
 
 		if ( AP_GetVital(defender, HITS) < total )
 			if ( temhabilidade(attacker, "Trespassar") )
