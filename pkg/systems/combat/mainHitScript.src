@@ -183,7 +183,7 @@ program MainHitScript( params )
 		endif
 
 		total := CalculateTotalDamage(defender, basedamage, attacker, dmgList);
-		if (GetObjPRoperty(attacker, "#ignorardefesas") > 1);
+		if (GetObjPRoperty(attacker, "#ignorardefesas") >= 1);
 			 var ignr := getObjPRoperty(attacker, "#ignorardefesas");
 			ignr := ignr - 1;
 			if (ignr <= 0)
@@ -704,10 +704,10 @@ function PoisonChecks(attacker, defender, weapon, armor, basedamage, rawdamage)
 		return 0;
 	endif
 	if (GetObjProperty(weapon, "ammo"))
-	var aljavas := array{0x7911, 0x2fb7};
+	var aljavas := array{0x791c, 0x2fb7};
 	var aljava := GetEquipmentByLayer(attacker, LAYER_CAPE);
 	
-		if (aljava in aljavas)
+		if (aljava.objtype in aljavas)
 			var aljava := GetEquipmentByLayer(attacker, LAYER_CAPE);
 		else
 			aljava := GetEquipmentByLayer(attacker, LAYER_WAIST);
