@@ -59,7 +59,7 @@ program skill_LumberJack(who,tool)
 			break;
 		endif
 		ChopTree(who, tool, targ, orig_x, orig_y);
-		AP_ConsumeVital(who, "Stamina", 5);
+		AP_ConsumeVital(who, "Stamina", 3);
 		CheckToolWear(who, tool, GATHERING );
 		sleep(1);
 		if (LJ_GetWoodAmount(who.realm, targ.x, targ.y)== 0 )
