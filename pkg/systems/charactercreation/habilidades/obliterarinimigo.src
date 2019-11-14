@@ -30,12 +30,7 @@ program manobra(attacker)
 		SendSysMessageEx(attacker, "Voce nao tem aliados!", SSM_FAIL);
 		return;
 	endif
-
-	PrintText(attacker, "*ordena os aliados*");
-
-	var testes := array;
-
-	var count:= 0; 
+ 
 	foreach member in (festa.members)
 		if (member.serial != attacker.serial)
 			if (Distance(attacker, member) < 8)

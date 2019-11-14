@@ -27,7 +27,7 @@ program manobra(attacker)
 
 	var testes := array;
 
-	var count:= 0; 
+	var count := 1; 
 	foreach member in (festa.members)
 		if (member.serial != attacker.serial)
 			if (Distance(attacker, member) < 8)

@@ -200,3 +200,18 @@ if (vantagem == "Aprendiz Rapido")
 	endif
 endfunction
 
+exported function GetVicioRegenRate(mobile)
+	var base_regen := CInt(AP_GetSettingsCfgElem("Regen").Vicio) * 100;
+	var regen := base_regen + AP_GetVitalRegenRateMod(mobile, "vicio");
+
+	if ((GetObjProperty(mobile, "#ultimouso") + 3000000 > polcore().systime) && (!mobile.npctemplate)  ) // Nao regenera se tiver usado no ultimo dia
+		return 0;
+	endif
+
+	return regen;
+endfunction
+
+exported function GetVicioMaximumValue(mobile)
+	return 86400*100;
+endfunction
+

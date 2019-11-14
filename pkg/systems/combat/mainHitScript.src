@@ -22,6 +22,7 @@ include ":charactercreation:habilidades";
 include "include/client";
 include "include/sounds";
 include ":spells:swordmage";
+include ":taming:taming";
 
 var item_cfg := ReadConfigFile(":*:itemdesc");
 
@@ -200,27 +201,29 @@ program MainHitScript( params )
 		//printtextabove(attacker, " "+ total + " base " + basedamage + " raw " + rawdamage);
 
 		CriticalHitScripts(attacker, defender, weapon, armor, basedamage, total);
-		if ( GetCooldown(attacker, "golpesamplos") )
-			var inimigos := ListHostiles(attacker, 1, LH_FLAG_LOS);
-			foreach inimigo in inimigos
-				DamageFLS(inimigo, cint(total/3), DMG_PHYSICAL, attacker);
-			endforeach
-			
-			var pt := attacker.party;
-			
-			if (pt)
-				foreach member in (pt.members)
-					if(Distance(member, attacker) < 3)
-					var inimigospt := ListHostiles(member, 1, LH_FLAG_LOS);
-						if(Distance(attacker, inimigospt) == 1)
-							DamageFLS(inimigospt, cint(total/3), DMG_PHYSICAL, attacker);
-						endif
+				if ( GetCooldown(attacker, "golpesamplos") )
+					var pt := attacker.party.members;
+					if (!pt)
+						var inimigos := ListHostiles(attacker, 1, LH_FLAG_LOS);
+						foreach inimigo in inimigos
+							DamageFLS(inimigo, cint(total/3), DMG_PHYSICAL, attacker);
+						endforeach			
+					else
+						var pets := ListPetsNear(attacker, 2);
+						var petspt := array;
+						foreach member in pt
+							petspt.append(ListPetsNear(member, 3));
+						endforeach
+						var inimigos2 := ListMobilesNearLocation(attacker.x, attacker.y, attacker.z, 1, attacker.realm);
+						foreach inimigo in inimigos2
+							if( !(inimigo in petspt) && !(inimigo in pets) && !(inimigo in attacker.party.members))
+								DamageFLS(inimigo, cint(total/3), DMG_PHYSICAL, attacker);
+							endif
+						endforeach
 					endif
-				endforeach
-			endif
 						
 
-		endif  
+				endif 
 
 		if ( AP_GetVital(defender, HITS) < total )
 			if ( temhabilidade(attacker, "Trespassar") )
@@ -233,14 +236,25 @@ program MainHitScript( params )
 				defender.attack_once(attacker);
 			endif
 			if ( temHabilidade(attacker, "Golpes Amplos"))
-				var inimigos := ListHostiles(attacker, 1, LH_FLAG_LOS);
-				var gadmg := cint(total - AP_GetVital(defender, HITS));
-				if (gadmg > 15)
-					gadmg := 15;
+				var pt := attacker.party.members;
+				if (!pt)
+					var inimigos := ListHostiles(attacker, 1, LH_FLAG_LOS);
+					foreach inimigo in inimigos
+						DamageFLS(inimigo, cint(total/3), DMG_PHYSICAL, attacker);
+					endforeach			
+				else
+					var pets := ListPetsNear(attacker, 2);
+					var petspt := array;
+					foreach member in pt
+						petspt.append(ListPetsNear(member, 3));
+					endforeach
+					var inimigos2 := ListMobilesNearLocation(attacker.x, attacker.y, attacker.z, 1, attacker.realm);
+					foreach inimigo in inimigos2
+						if( !(inimigo in petspt) && !(inimigo in pets) && !(inimigo in attacker.party.members))
+							DamageFLS(inimigo, cint(total/3), DMG_PHYSICAL, attacker);
+						endif
+					endforeach
 				endif
-				foreach inimigo in inimigos
-					DamageFLS(inimigo, gadmg, DMG_FORCED, attacker);
-				endforeach
 			endif
 
 		//	if ( temHabilidade(attacker, "Assassinato Horrorizante") )
