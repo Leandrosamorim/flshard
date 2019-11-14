@@ -1,18 +1,18 @@
-# *.exe
-# *.md
-# *.7z
-# *.dmp
-# *.log
-# *.txt
-# *.zip
-# *.ecl
-# *.bak
-# *.em
-# *.uop
-# *.def
-# *.mul
-# *.idx
-# *.rar
+ *.exe
+ *.md
+ *.7z
+ *.dmp
+ *.log
+ *.txt
+ *.zip
+ *.ecl
+ *.bak
+ *.em
+ *.uop
+ *.def
+ *.mul
+ *.idx
+ *.rar
 
 # Windows image file caches
 Thumbs.db
