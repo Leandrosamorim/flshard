@@ -396,6 +396,7 @@ function CalculateTotalDamageBonus(dmg, who, defender)
 		endif
 		if (GetCooldown(who, "FuriaPrimordial"))
 			var inimigos := ListHostiles(who, 3, LH_FLAG_LOS);
+			inimigos := inimigos.size();
 			other := other + 0.8*inimigos;
 		endif
 		if (GetCooldown(who, "FuriaMortal"))
