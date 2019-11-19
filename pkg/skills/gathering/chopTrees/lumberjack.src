@@ -95,6 +95,13 @@ function ChopTree(who, tool, targ, orig_x, orig_y)
 	if (difficulty > 30)
 		difficulty := 30;
 	endif
+	
+	if (tool.objtype == 0x0f43)
+		difficulty := difficulty - 10;
+			if (difficulty < 0)
+				difficulty := 0;
+			endif
+	endif
 
 	//if ( who.cmdlevel )
 	//	SendSysMessage(who, "MaxWood="+max_wood+"    CurWood="+wood_amount);
