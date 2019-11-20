@@ -23,16 +23,16 @@ include ":charactercreation:createchar";
 include ":charactercreation:habilidades";
 include ":gumps:requestgump";
 
- var skilllist := array{"Alchemy", "MagicLore", "Magery",  "Survival", "HandleAnimal",  "Awareness", "Medicine",  "DomesticWork",  
-"Sneak",  "MechanicalApitude", "Pickpocketing",  "WoodWorking", "MetalWorking",  
-"RangedCombat", 
+ var skilllist := array{"Alchemy", "MagicLore", "Magery",  "Survival", "HandleAnimal",  "Awareness", "Medicine",  "DomesticWork",
+"Sneak",  "MechanicalApitude", "Pickpocketing",  "WoodWorking", "MetalWorking",
+"RangedCombat",
 "MeleeCombat2H", "MeleeCombat1H",  "Parry",  "Tactics" , "Gathering"};
 
 
 program core_skillWin(who)
 
 	//sendskillwindow(who, who);
-	//return 1;	
+	//return 1;
 	if (who.dead)
 		SendSysMessage(who, "Voce esta morto e nao pode fazer isto.");
 		return;
@@ -86,7 +86,7 @@ program core_skillWin(who)
 			endif
 		endif
 		y := y + 15;
-		
+
 	endforeach
 
 
@@ -110,7 +110,7 @@ function Habilidades(who)
 		SetObjProperty(who, "#gumphab", 1);
 		return;
 	endif
-	
+
 	var habcfg := ReadConfigFile(":charactercreation:config/habilidades");
 	var habs := GetObjProperty(who, "buyhab");
 	var myhabs := GetObjProperty(who, "myhabs");
@@ -125,7 +125,7 @@ function Habilidades(who)
 		if (chardata.Skills[skill]  == 3)
 			primarias := primarias + 1;
 			primSum := primSum + AP_GetSkill(who, skill);
-		endif		
+		endif
 	endforeach
 	primSum := primSum - primarias*40; //so conta os pontos que subiu a partir de 40
 	primarias := primarias*3;
@@ -149,7 +149,7 @@ function Habilidades(who)
 	var y := 60;
 	for(i := 0; i <= 20; i := i + 1)
 
-		if ( Cint(habs[i]) == 1) 
+		if ( Cint(habs[i]) == 1)
 			GFTextLine(chargump, 40, y, 1150, "Nivel " + i + " : ");
 			if (i%2 == 1)
 				GFTextLine(chargump, 100, y, 300, "Comprar Status");
@@ -182,11 +182,11 @@ function Habilidades(who)
 	if (input[0] > 0)
 		input := input[0];
 
-		if ( input % 2 == 1 ) 
+		if ( input % 2 == 1 )
 			SendSysMessageEx(who,  "Voce pode comprar +2 em algum status.", SSM_INFO);
 				var gump2 := GFCreateGump();
 				GFDisposable(gump2, 0);
-				GFResizePic(gump2, 0, 25, 3600, 170, 130);	
+				GFResizePic(gump2, 0, 25, 3600, 170, 130);
 				GFResizePic(gump2, 15, 40, 0x13BE, 140, 100);
 				GFTextLine(gump2, 35, 50, 1153, "Escolha o Status");
 
@@ -207,7 +207,7 @@ function Habilidades(who)
 					if (input2 == 10)
 						habs[input] := 2;
 						SetObjProperty(who, "buyhab", habs);
-						AP_SetTrueStat(who, STRENGTH, AP_GetTrueStat(who, STRENGTH)+2);		
+						AP_SetTrueStat(who, STRENGTH, AP_GetTrueStat(who, STRENGTH)+2);
 					elseif (input2 == 20)
 						habs[input] := 2;
 						SetObjProperty(who, "buyhab", habs);
@@ -223,8 +223,8 @@ function Habilidades(who)
 		endif
 
 		EraseObjProperty(who, "#gumphab");
-		return 1; 
-		
+		return 1;
+
 		//agora eh por SCROLL
 		var classe := GetObjProperty(who, "classe");
 		var possiveis := HabilidadesPorNivel(who, classe, input);
@@ -259,7 +259,7 @@ function Habilidades(who)
 				while(!targ.isA(POLCLASS_WEAPON))
 					targ := Target(who);
 				endwhile
-				SetObjProperty(who, "fococomarma", targ.objtype);			
+				SetObjProperty(who, "fococomarma", targ.objtype);
 				SendSysMessageEx(who, "Arma escolhida.", SSM_INFO);
 			elseif (escolhida == "Senso da Natureza")
 				setObjProperty(who, "empatiacomanimais", 1);
@@ -270,7 +270,7 @@ function Habilidades(who)
 			SetObjProperty(who, "myhabs", myhabs);
 		endif
 	endif
-	
+
 
 endfunction
 
@@ -283,15 +283,15 @@ function ComprarHabGump(who, habs)
 	var sizey := (habs.size()*100) + 120;
 
         GFDisposable(gump, 0);
-	GFResizePic(gump, 0, 25, 3600, 380, sizey+30);	
+	GFResizePic(gump, 0, 25, 3600, 380, sizey+30);
 	GFResizePic(gump, 15, 40, 0x13BE, 350, sizey);
 	GFTextMid(gump, 80, 50, 250, 1153, "Habilidades de Classe");
-	
+
 	var habcfg := ReadConfigFile(":charactercreation:config/habilidades");
-	
+
 	var x := 40;
 	var y := 80;
-	
+
 	var i := 1;
 	foreach hab in habs
 		var habelem := FindConfigElem(habcfg, hab);
@@ -324,10 +324,10 @@ function ComprarHabGump(who, habs)
 		endif
 		GFHTMLArea( gump, x, y+20, 300, 90, desc, 1150, 0);
 
-		i := i + 1;		
+		i := i + 1;
 		y := y + 110;
 	endforeach
-	
+
 	var input := GFSendGump(who, gump);
 	input := input[0];
 
@@ -343,22 +343,22 @@ endfunction
 function GetSkillColor(skill)
 
 	var temp := cint(skill/10);
-	
+
 	skill := Cint(skill - temp*10);
 
 	case (skill)
-		0: return 933;
-		1: return 833;
-		2: return 733;
-		3: return 633;
-		4: return 533;
-		5: return 433;
-		6: return 333;
-		7: return 233;
-		8: return 133;
-		9: return 33;
+		0: return 338;
+		1: return 343;
+		2: return 348;
+		3: return 353;
+		4: return 358;
+		5: return 363;
+		6: return 368;
+		7: return 378;
+		8: return 393;
+		9: return 398;
 	endcase
-	
+
 
 endfunction
 
@@ -369,7 +369,7 @@ function SelectTrainingSkills(who)
 
 	GFClosable(chargump, 1);
 	GFDisposable(chargump, 0);
-	GFResizePic(chargump, 0, 25, 3600, 400, 430);	
+	GFResizePic(chargump, 0, 25, 3600, 400, 430);
 	GFResizePic(chargump, 15, 40, 0x13BE, 370, 400);
 
 
@@ -384,7 +384,7 @@ function SelectTrainingSkills(who)
   var y := 100;
   var i;
   GFSetRadioGroup(chargump, 1);
-  
+
   for (  i :=  1; i <= skilllist.size(); i := i + 1)
       var skillAux := skilllist[i];
       var elem := AP_GetAttributeCfgElem(skillAux);
@@ -399,17 +399,17 @@ function SelectTrainingSkills(who)
 		check := 1;
 	endif
       GFCheckBox(chargump, x-20, y+3, 2360, 2361, check, i);
-  
+
       y := y + 15;
-  
+
       if ( i == 21 )
         x := x + 140;
         y := 100;
       endif
-  
+
       sleepms(2);
-  endfor  
-  
+  endfor
+
 	GFAddButton(chargump, 310, 400, 4502, 4502, 1, 100 );
 	GFTextLine(chargump, 270, 410, 1153, "Pronto");
 
@@ -427,7 +427,7 @@ function SelectTrainingSkills(who)
   endif
 
 	if (selecteds.size() > 3)
-		SendSysMEssageEx(who, "Voce pode escolher no maximo cinco pericias.", SSM_FAIL);
+		SendSysMEssageEx(who, "Voce pode escolher no maximo três pericias.", SSM_FAIL);
 		return;
 	endif
 
@@ -437,7 +437,7 @@ function SelectTrainingSkills(who)
 		trainingSkills.append(selectedSkill);
 
 	endforeach
-	
+
 	if (trainingSkills[1])
 		SetObjProperty(who, "trainingSkills", trainingSkills);
 	else
@@ -456,7 +456,7 @@ function SkillEraser(who)
 
 	GFClosable(chargump, 1);
 	GFDisposable(chargump, 0);
-	GFResizePic(chargump, 0, 25, 3600, 400, 430);	
+	GFResizePic(chargump, 0, 25, 3600, 400, 430);
 	GFResizePic(chargump, 15, 40, 0x13BE, 370, 400);
 
 
@@ -504,17 +504,17 @@ function SkillEraser(who)
 		check := 1;
 	endif
       GFCheckBox(chargump, x-20, y+3, 2360, 2361, check, i);
-  
+
       y := y + 15;
-  
+
       if ( i == 21 )
         x := x + 140;
         y := 100;
       endif
-  
+
       sleepms(2);
-  endfor  
-  
+  endfor
+
 	GFAddButton(chargump, 310, 400, 4502, 4502, 1, 100 );
 	GFTextLine(chargump, 270, 410, 1153, "Pronto");
 
@@ -534,7 +534,7 @@ function SkillEraser(who)
  //ainingSkills := array;
  foreach selected in selecteds
   var selectedskill := skilllist[selected];
-  
+
     if (selectedskill == "Survival")
       selectedskill := "Camping";
     elseif (selectedskill == "ItemLore")
@@ -544,7 +544,7 @@ function SkillEraser(who)
     elseif ( selectedskill == "MagicLore")
       selectedskill := "Inscription";
     endif
- 
+
     var value := cdbl(RequestGump(who, "Quantos pontos vai abaixar da pericia " + selectedSkill + " ? " ));
     	skillsToDelete[selectedSkill] := value;
   //  trainingSkills.append(selectedSkill);
