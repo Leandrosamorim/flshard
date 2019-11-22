@@ -15,7 +15,7 @@ use os;
 use cfgfile;
 
 //Arbitrary objtype in the core.
-const MOUNT_OBJTYPE := 0xF021;
+const MOUNT_OBJTYPE := 0x1F021;
 
 include "include/client";
 
@@ -46,7 +46,7 @@ endfunction
  * MP_GetMountsCfgElem(elem_name, cfg_file)
  *
  * Purpose
- * Retrieves an elem from a config file. 
+ * Retrieves an elem from a config file.
  *
  * Parameters
  * elem_name:	A string matching the elem name to be retrieved.
@@ -60,7 +60,7 @@ function MP_GetMountsCfgElem(elem_name, byref cfg_file:=0)
 	if ( !cfg_file )
 		cfg_file := MP_GetMountsCfgFile();
 	endif
-	
+
 	var elem := cfg_file[elem_name];
 
 	if ( elem.errortext )
@@ -92,10 +92,10 @@ function MP_GetMountGraphic(mobile)
 	else
 		mobile_graphic := Hex(CInt(mobile));
 	endif
-	
+
 	var elem := MP_GetMountsCfgElem("MobileToMount");
 	var tile_graphic := GetConfigInt(elem, mobile_graphic);
-	
+
 	if ( tile_graphic )
 		return tile_graphic;
 	else
@@ -130,10 +130,10 @@ function MP_GetMountTemplate(mount)
 	else
 		mount_graphic := Hex(CInt(mount));
 	endif
-	
+
 	var elem := MP_GetMountsCfgElem("MountToMobile");
 	template := GetConfigString(elem, mount_graphic);
-	
+
 	if ( template )
 		return template;
 	else
@@ -141,7 +141,7 @@ function MP_GetMountTemplate(mount)
 	endif
 endfunction
 
-/* 
+/*
  * MP_Mount(mobile, npc)
  *
  * Purpose
@@ -150,13 +150,12 @@ endfunction
  * Parameters
  * mobile:	Mobile that will be mounted.
  * npc:		NPC to convert into a mount piece.
- * 
+ *
  * Return value
  * Returns the mount piece.
  *
  */
 function MP_Mount(mobile, npc)
-
 	if ( Cint(GetObjProperty(mobile, "#desmontar")) == 1)
 		SendSysMessage(mobile, "Voce nao pode montar.");
 		return 0;
@@ -172,26 +171,28 @@ function MP_Mount(mobile, npc)
 	if (GetObjProperty(npc, "owner") != mobile.serial)
 		return error{"errortext":="Mobile is already mounted."};;
 	endif
-	
+
 	Set_Critical(1);
 	var mount_graphic := MP_GetMountGraphic(npc);
 	if ( !mount_graphic )
 		return mount_graphic;
 	endif
-	
+
 	mount_piece := CreateItemAtLocation(mobile.x, mobile.y, mobile.z, MOUNT_OBJTYPE, 1);
 	mount_piece.graphic := mount_graphic;
 	mount_piece.color := npc.color;
 	//sendsysmessage(mobile, "cor " + mount_piece.color + " " + npc.color);
 	SetName(mount_piece, npc.name);
-	
+
 	var result := EquipItem(mobile, mount_piece);
 	if ( !result )
 		// Unable to equip the mount piece.
 		DestroyItem(mount_piece);
+		//sendsysmessage(mobile, "cant equip mount piece");
 		return result;
 	else
 		// Setting equipped mounts prevents un-equip exploits.
+		//sendsysmessage(mobile, "mountpice fixed");
 		mount_piece.movable := 0;
 	endif
 
@@ -201,13 +202,14 @@ function MP_Mount(mobile, npc)
 	//ExchangeStamina(mobile, npc);
 
 	MoveObjectToLocation(npc, 6066, 60, 22, npc.realm, MOVEOBJECT_FORCELOCATION);
+
 	//MoveObjectToLocation(me, owner.x, owner.y, owner.z, me.realm, MOVEOBJECT_FORCELOCATION);
 
 	return mount_piece;
 endfunction
 
 
-/* 
+/*
  * MP_Unmount(mobile)
  *
  * Purpose
@@ -253,18 +255,18 @@ function MP_DeathUnmount(corpse)
 	if ( !corpse.IsA(POLCLASS_CORPSE) )
 		return error{"errortext":="Object passed is not a corpse."};
 	endif
-	
+
 	foreach item in ( EnumerateItemsInContainer(corpse) )
 		if ( item.objtype == MOUNT_OBJTYPE )
 			return MP_RestoreMountToAnimal(corpse, item);
 			break;
 		endif
 	endforeach
-	
+
 	return error{"errortext":="No mount pieces were found on the corpse."};
 endfunction
- 
-/* 
+
+/*
  * MP_RestoreMountToAnimal(mobile, mount)
  *
  * Purpose
@@ -295,18 +297,18 @@ function MP_RestoreMountToAnimal(mobile, mount)
 			DestroyItem(mount);
 			return template;
 		endif
-		
+
 		animal := CreateNPCFromTemplate(template, mobile.x, mobile.y, mobile.z);
 		animal.facing := mobile.facing;
 		animal.color := mount.color;
 		animal.name := mount.desc;
 	endif
 	DestroyItem(mount);
-	
+
 	return animal;
 endfunction
 
-/* 
+/*
  * ExchangeStamina(who, me)
  *
  * Purpose
@@ -325,7 +327,7 @@ endfunction
 	var his_stamina := AP_GetVital(who, "Stamina");
 
 	var his_vitality := CInt(GetObjProperty(who, "Vitality"));
-	
+
 	SetObjProperty(who, "OldVitality", his_vitality);
 	SetObjProperty(me, "Vitality", his_vitality);
 	SetObjProperty(who, "Vitality", CInt(AP_GetVitalMaximumValue(me, "Stamina")));
@@ -338,7 +340,7 @@ endfunction
 endfunction
 
 
-/* 
+/*
  * IsMountable(mobile_graphic)
  *
  * Purpose
