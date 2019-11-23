@@ -7,7 +7,7 @@ include ":charactercreation:habilidades";
 
 program forgery(who)
 
-	SendSysMessageEx(who, "Escolhe algum livro ou pergaminho para falsificar.", SSM_INFO);
+	SendSysMessageEx(who, "Escolhe algum livro ou pergaminho para falsificar, ou uma barra de ouro", SSM_INFO);
 	var livro := Target(who);
 
 	if (livro.usescript == ":sysbook:book/use")
@@ -18,8 +18,11 @@ program forgery(who)
 			SetObjProperty(livro, "ReadOnly", 1);
 			SendSysMessageEx(who, "Voce selou o livro.", SSM_INFO);
 		endif
+	elseif(livro.objtype == 0x1be9)
+		CreateItemInBackpack( who, 0x6e, livro.amount*5 );
+		DestroyItem(livro);
 	else
-		SendSysMessageEx(who, "Essa habilidade funciona apenas em livros.", SSM_FAIL);
+		SendSysMessageEx(who, "Essa habilidade funciona apenas em livros ou barras de ouro.", SSM_FAIL);
 		return 0;
 	endif
 
