@@ -13,7 +13,6 @@
 *.mul
 *.idx
 *.rar
-*.dat
 
 # Windows image file caches
 Thumbs.db
