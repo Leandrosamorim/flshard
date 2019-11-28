@@ -32,6 +32,9 @@ program HitScript(params)
 			if (cfg[npctemplate.template].Category == inimigo)
 				var dmg := rawdamage / 2;
 				DamageFLS(defender, dmg, DMG_FORCED, attacker);
+				if(GetObjProperty(weapon, "#slayer"))
+					return 0;
+				endif
 			endif
 			case(selected)
 			"Dragon":
@@ -47,6 +50,7 @@ program HitScript(params)
 			"Goblin":
 			SetObjProperty(weapon, "description", "Empunhadura entalhada num osso goblinoide");
 			endcase
+		SetObjProperty(weapon, "#slayer", 1);
 	endif
 	
 	return 1;

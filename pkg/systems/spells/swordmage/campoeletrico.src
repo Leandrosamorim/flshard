@@ -38,7 +38,7 @@ program SpellScript(params)
 			return 1;
 		endif
 
-		var duracao := Cint(AP_GetSkill(who, MAGICLORE))/2;
+		var duracao := Cint(AP_GetSkill(who, MAGICLORE));
 		SetCooldown(who, "campoeletrico", duracao);
 	
         	PlaySoundEffect(targ, SFX_BLESS);

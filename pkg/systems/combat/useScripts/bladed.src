@@ -41,7 +41,11 @@ program use_Bladed(who, tool)
 endprogram
 
 function CutCheese(who, cheese)
-	createiteminbackpack(who, 0x97C, 8);
+	var queijo := createiteminbackpack(who, 0x97C, 8);
+	if(GetObjProperty(cheese, "capmod"))
+		var capmod := GetObjProperty(cheese, "capmod");
+		SetObjProperty(queijo, "capmod", capmod);
+	endif
 	SendSysMessage(who, "Voce cortou o queijo em oito partes.");
 	DestroyItem(cheese);
 	return 1;
@@ -55,7 +59,11 @@ function CutCake(who, cake)
 endfunction
 
 function CutCheese2(who, cheese)
-	createiteminbackpack(who, 0x97C, 5);
+	var queijo := createiteminbackpack(who, 0x97C, 8);
+	if(GetObjProperty(cheese, "capmod"))
+		var capmod := GetObjProperty(cheese, "capmod");
+		SetObjProperty(queijo, "capmod", capmod);
+	endif
 	SendSysMessage(who, "Voce cortou o queijo em cinco partes.");
 	DestroyItem(cheese);
 	return 1;

@@ -59,7 +59,7 @@ function GetNumPets(who)
 			if (!Cint(cfg.petslot))
 				num_tamed := num_tamed+1;
 			else
-				num_tamed := Cint(cfg.petslot);
+				num_tamed := num_tamed + Cint(cfg.petslot);
 			endif
 		elseif ( !pet || pet.master !=who )
 			tamed.erase(_serial_iter);
@@ -114,11 +114,11 @@ function GetMaxPets(who)
 	var maxpets := 1;
 	
 	if (skill >= 45 && skill < 75)
-	maxpets := maxpets + 1;
+		maxpets := maxpets + 1;
 	elseif (skill >= 75 && skill < 90)
-	maxpets := maxpets + 2;
+		maxpets := maxpets + 2;
 	elseif (skill >= 90)
-	maxpets := maxpets + 3;
+		maxpets := maxpets + 3;
 	endif
 
 	maxpets := maxpets + cint( GetObjProperty(who, "extrapets") );
