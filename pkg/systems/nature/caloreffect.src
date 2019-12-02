@@ -44,7 +44,7 @@ program calor(params)
 		endif
 	
 		if ( GetGlobalProperty("weather") != error) //ta chovendo ou nevando
-			dif := dif + 40;
+			dif := dif - 40;
 		endif
 
 		if ( GetObjProperty(who, "chardata").povo == "Thuriao")

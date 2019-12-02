@@ -24,7 +24,7 @@ program skill_Stealing(mobile)
 		SendSysMessageEx(mobile, "Voce deve aguardar um pouco para usar essa pericia novamente.", SSM_INFO);
 		return 0;
 	else
-		SetObjProperty(mobile, "#StealWait", ReadGameClock()+15);
+		SetObjProperty(mobile, "#StealWait", ReadGameClock()+5);
 	endif
 
 	if (!maolivre(mobile, 1))
@@ -33,6 +33,7 @@ program skill_Stealing(mobile)
 
 	SendSysMessageEx(mobile, "Selecione que pessoa ou item voce deseja roubar.", SSM_REQUEST);
 	var targ := Target(mobile);
+	var difbonus := 0;
 	if (targ == mobile)
 		SendSysMessageEx(mobile, "Espertao voce hein..?", SSM_FAIL);
 		return 0;
@@ -55,8 +56,11 @@ program skill_Stealing(mobile)
 		SendSysMessageEx(mobile, "O alvo esta muito longe.", SSM_FAIL);
 		return 0;
 	elseif ( !IsBehind(targ, mobile.x, mobile.y) )
-		SendSysMessageEx(mobile, "Voce precisa estar atras do alvo que deseja roubar.", SSM_FAIL);
-		return 0;
+		if(!temHabilidade(mobile, "Punga"))
+		SendSysMessageEx(mobile, "Voce precisa estar nas costas do alvo.", SSM_FAIL);
+		else
+		difbonus := 10;
+		endif
 	endif
 
 	var diff := 15 + CInt(AP_GetSkill(targ, AWARENESS));
@@ -110,9 +114,16 @@ program skill_Stealing(mobile)
 				if (temHabilidade(mobile, "Punga"))
 					diff := 0;
 				endif
+			elseif (steal.objtype IN {0x1011, 0x100E, 0x100F, 0x1010, 0x1012, 0x1013}) // chaves
+				diff := 35;
+				if (temHabilidade(mobile, "Punga"))
+					diff := 0;
+				endif
 			else
 				diff := CInt(steal.weight*10);
 			endif
+			
+			diff := diff + difbonus;
 
 			if (diff > 1.5 * AP_GetSkill(mobile, PICKPOCKETING))
 				SendSysMessageEx(mobile, "Voce nao tentara roubar isso, pois tem certeza que falhara.", SSM_INFO);

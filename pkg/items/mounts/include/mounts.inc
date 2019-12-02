@@ -160,8 +160,14 @@ function MP_Mount(mobile, npc)
 	var mount_graphic := MP_GetMountGraphic(npc);
 	var chardata := GetObjProperty(mobile,  "chardata");
 	var mount_piece := GetEquipmentByLayer(mobile, LAYER_MOUNT);
-
-	SendSysMessage(mobile, chardata.povo);
+	var npctemplate := NPC_ParseTemplateName(npc.npctemplate);
+	var cfg := ReadConfigFile(":brainai:npcdesc");
+	
+	if (cfg[npctemplate.template].Category != "Mount")
+		SendSysMessage(mobile, "Nao pode montar este animal.");
+		return 0;
+	endif
+		
 
 	if ( Cint(GetObjProperty(mobile, "#desmontar")) == 1)
 		SendSysMessage(mobile, "Voce nao pode montar.");
@@ -177,19 +183,19 @@ function MP_Mount(mobile, npc)
 
 
 	//check do Urso
-	if (mount_graphic == 0xD5 && chardata.povo != "Numajene")
+	if (npc.graphic == 0xD5 && chardata.povo != "Numajene")
 		SendSysMessage(mobile, "Voce nao pode montar essa criatura.");
 		return 0;
 	endif
 
 	//check do Unicornio
-	if (mount_graphic == 0x7A && chardata.povo != "Numajene")
+	if (npc.graphic == 0x7A && chardata.povo != "Numajene")
 		SendSysMessage(mobile, "Voce nao pode montar essa criatura.");
 		return 0;
 	endif
 
 	//Lock dos tigres
-	if (mount_graphic == 0x4e6 || mount_graphic == 0x4e7)
+	if (npc.graphic == 0x4e6 || npc.graphic == 0x4e7)
 		return error{"errortext":="Voce nao pode montar essa criatura"};
 	endif
 

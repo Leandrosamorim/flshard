@@ -339,6 +339,17 @@ function SkillChecks(attacker, defender, weapon, rawdamage)
 		//se a skill do atacante for maior que a do defender +10, nao sobe
 		var skillDefender := cint(AP_GetSkill(defender,defender.weapon.attribute)) + 10;
 		var skillAttacker := cint(AP_GetSkill(attacker, attacker.weapon.attribute));
+		if(TemHabilidade(attacker, "Maestria de Devastacao"))
+			if(GetObjProperty(attacker.weapon, "swordmage") == attacker.serial)
+			skillAttacker := cint(AP_GetSkill(attacker, MELEECOMBAT1H));
+			endif
+		endif
+		if(TemHabilidade(defender, "Maestria de Devastacao"))
+			if(GetObjProperty(defender.weapon, "swordmage") == defender.serial)
+			skillDefender := cint(AP_GetSkill(defender,MELEECOMBAT1H)) + 10;
+			endif
+		endif
+
 		if ( skillDefender < skillAttacker )
 			//printtextabove(attacker, "return " + skillDefender);
 			return 0;
