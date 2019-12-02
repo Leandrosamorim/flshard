@@ -50,6 +50,10 @@ exported function GetManaRegenRate(mobile)
 	if (TemHabilidade(mobile, "Mente Tranquila"))
 		base_regen := base_regen + base_regen;
 	endif
+	
+	if (TemHabilidade(mobile, "Adrenalina Espiritual"))
+		base_regen := base_regen + base_regen;
+	endif
 
 	return base_regen + AP_GetVitalRegenRateMod(mobile, "mana");
 endfunction

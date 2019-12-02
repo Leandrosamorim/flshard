@@ -377,7 +377,7 @@ function AddItemToSell(npc, player)
 	var onlyplayersells := GetObjProperty(npc, "oneplayersells");
 	if (onlyplayersells)
 		if (onlyplayersells != player.name)
-			SendSysMessage(player, "Perdao, somente " + onlyplayersells + " pode fazer vendas comigo");
+			SendSysMessage(player, "Voce nao pode vender neste mercador");
 			return;
 		endif
 	endif
@@ -517,7 +517,7 @@ function AddItem(npc, player, targ)
 		endif
 	var infinite := 0;
 		if (dezperc < 1)
-			dezperc := CInt(1);
+			dezperc := CInt(0);
 		else
 			dezperc := CInt(dezperc);
 		endif

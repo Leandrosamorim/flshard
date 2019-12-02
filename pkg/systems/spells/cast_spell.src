@@ -66,7 +66,9 @@ program SpellStarter(params)
 			return 0;
 		else
 			SetObjProperty(mobile, "#Casting", 1);
+			if(!TemHabilidade(mobile, "Mago Precavido"))
 			mobile.frozen := 1;
+			endif
 		endif
 	endif
 
