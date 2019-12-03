@@ -17,12 +17,12 @@ program manobra(who)
 
 	var element := GetElementalType(who);
 	var duracao := AP_GetSkill(who, MAGICLORE);
-	
+	print(element);
 	case(element)
-		DMG_FIRE:
+		"Fire":
 		SendSysMessageEx(who, "Voce conjura uma explosao na direcao apontada.", SSM_INFO);
 		Rastrodefogo(who, targ);
-		DMG_COLD:
+		"Cold":
 		SendSysMessageEx(who, "Voce invoca uma forte nevasca ao seu redor.", SSM_INFO);
 		foreach defender in (ListMobilesNearLocation( who.x, who.y, who.z, 10, who.realm ))
 			if ( !(defender in who.party.members ) )
@@ -34,8 +34,8 @@ program manobra(who)
 				endif
 			endif
     		endforeach
-		DMG_ENERGY:
-		SendSysMessageEx(who, "Voce esta protegido da energia.", SSM_INFO);
+		"Energy":
+		SendSysMessageEx(who, "Voce invoca uma tempestade.", SSM_INFO);
 		foreach defender in (ListMobilesNearLocation( who.x, who.y, who.z, 8, who.realm ))
 			if ( !(defender in who.party.members ) )
 				if (defender.serial != who.serial)

@@ -58,6 +58,7 @@ program skill_Stealing(mobile)
 	elseif ( !IsBehind(targ, mobile.x, mobile.y) )
 		if(!temHabilidade(mobile, "Punga"))
 		SendSysMessageEx(mobile, "Voce precisa estar nas costas do alvo.", SSM_FAIL);
+		return 0;
 		else
 		difbonus := 10;
 		endif
@@ -81,8 +82,10 @@ program skill_Stealing(mobile)
 				SendSysMessageEx(mobile, "O alvo se afastou demais.", SSM_FAIL);
 				break;
 			elseif ( !IsBehind(targ, mobile.x, mobile.y) )
+				if(!temHabilidade(mobile, "Punga"))
 				SendSysMessageEx(mobile, "O alvo nao esta mais de costas para voce.", SSM_FAIL);
 				break;
+				endif
 			elseif (steal == targ)
 				SendSysMessageEx(mobile, "Alvo invalido.", SSM_FAIL);
 				continue;
