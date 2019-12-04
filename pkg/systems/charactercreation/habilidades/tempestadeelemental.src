@@ -8,6 +8,8 @@ include "include/say";
 include ":spells:swordmage";
 include ":spells:summon";
 include "include/shapes";
+include "include/sounds";
+include "include/client";
 
 program manobra(who)
 
@@ -15,27 +17,29 @@ program manobra(who)
 	var undead;
 	var template;
 
-	var element := GetElementalType(who);
-	var duracao := AP_GetSkill(who, MAGICLORE);
-	
+	var element;
+	element := GetObjProperty(who.weapon, "#elementalweapon");
+	element := element.type;
+	var duracao ;
+	duracao := AP_GetSkill(who, MAGICLORE);
 	case(element)
-		DMG_FIRE:
+		"Fire":
 		SendSysMessageEx(who, "Voce conjura uma explosao na direcao apontada.", SSM_INFO);
-		Rastrodefogo(who, targ);
-		DMG_COLD:
+		Rastrodefogo(who, targ, duracao);
+		"Cold":
 		SendSysMessageEx(who, "Voce invoca uma forte nevasca ao seu redor.", SSM_INFO);
 		foreach defender in (ListMobilesNearLocation( who.x, who.y, who.z, 10, who.realm ))
 			if ( !(defender in who.party.members ) )
 				if (defender.serial != who.serial)
-      					PlaySoundEffect(defender, 0x0015);
-						PlayObjectCenteredEffect(defender, 0x373A, 1);
-						DamageFLS(defender, RandomIntMinMax(15, 25), DMG_ENERGY, who);
-						TS_Starttimer(defender, "paralysis", 6);
+      					PlayObjectCenteredEffect(defender, GFX_BLUE_SPARKLE_GROUND, 3, 4);
+						PlaySoundEffect(defender, SFX_GLASS_BREAK_3);
+						DamageFLS(defender, RandomIntMinMax(20, 35), DMG_ENERGY, who);
+						TS_Starttimer(defender, "congelamento", 3);
 				endif
 			endif
     		endforeach
-		DMG_ENERGY:
-		SendSysMessageEx(who, "Voce esta protegido da energia.", SSM_INFO);
+		"Energy":
+		SendSysMessageEx(who, "Voce invoca uma tempestade.", SSM_INFO);
 		foreach defender in (ListMobilesNearLocation( who.x, who.y, who.z, 8, who.realm ))
 			if ( !(defender in who.party.members ) )
 				if (defender.serial != who.serial)
@@ -47,12 +51,10 @@ program manobra(who)
     		endforeach
 	endcase
 
-	undead := summon(template, targ, who);
-	TS_Starttimer(undead, "summon", duracao);
 	
 endprogram
 
-function Rastrodefogo(npc, opponent)
+function Rastrodefogo(npc, opponent, duracao)
 	if ( !CheckLineOfSight(npc, opponent) )
 	SendSysMessageEx(npc, "Voce nao ve o alvo.", SSM_INFO);
 		return 0;
@@ -74,7 +76,7 @@ function Rastrodefogo(npc, opponent)
 		sleepms(105);
 	endforeach
 
-	foreach coord in GetCoordsInSquare(opponent.x, opponent.y, 4)
+	foreach coord in GetCoordsInSquare(opponent.x, opponent.y, 3)
 		if ( RandomInt(2) != 1 ) // Don't place a fire field
 			continue;
 		endif
@@ -103,7 +105,7 @@ function Rastrodefogo(npc, opponent)
 
 	var chars := ListMobilesNearLocation(opponent.x, opponent.y, opponent.z, 4, npc.realm);
 	foreach mobile in chars
-		DamageFLS(mobile, RandomIntMinMax(25,55), DMG_FIRE, npc);
+		DamageFLS(mobile, RandomIntMinMax(40,duracao), DMG_FIRE, npc);
 	endforeach
 	
 

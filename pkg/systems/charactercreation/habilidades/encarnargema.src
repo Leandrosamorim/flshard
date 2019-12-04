@@ -14,18 +14,20 @@ program manobra(who)
 	var undead;
 	var template;
 
-	var element := GetElementalType(who);
+	var element ;
+	element := 	GetObjProperty(who.weapon, "#elementalweapon");
+	element := element.type;
 	var duracao := AP_GetSkill(who, MAGICLORE);
 	
 	case(element)
-		DMG_FIRE:
-		SendSysMessageEx(who, "Voce esta protegido do fogo.", SSM_INFO);
+		"Fire":
+		SendSysMessageEx(who, "Voce conjura um elemental do fogo a partir da gema da sua arma.", SSM_INFO);
 		template := ":brainai:fireelemental";
-		DMG_COLD:
-		SendSysMessageEx(who, "Voce esta protegido do gelo.", SSM_INFO);
+		"Cold":
+		SendSysMessageEx(who, "Voce conjura um elemental do gelo a partir da gema da sua arma.", SSM_INFO);
 		template := ":brainai:iceelemenetal";
-		DMG_ENERGY:
-		SendSysMessageEx(who, "Voce esta protegido da energia.", SSM_INFO);
+		"Energy":
+		SendSysMessageEx(who, "Voce conjura um elemental do energia a partir da gema da sua arma.", SSM_INFO);
 		template := ":brainai:elementaldeenergia";
 	endcase
 
