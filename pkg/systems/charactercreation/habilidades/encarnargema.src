@@ -14,7 +14,9 @@ program manobra(who)
 	var undead;
 	var template;
 
-	var element := GetElementalType(who);
+	var element ;
+	element := 	GetObjProperty(who.weapon, "#elementalweapon");
+	element := element.type;
 	var duracao := AP_GetSkill(who, MAGICLORE);
 	
 	case(element)

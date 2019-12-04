@@ -66,13 +66,15 @@ program TamedAI()
 
 			SYSEVENT_ENGAGED:
 
-				opponent := ev.source;
 
 			SYSEVENT_DAMAGED:
 
 				if ( (ev.source).IsA(POLCLASS_MOBILE) )
+					if ( Distance(ev.source, me) <= 1)
 
 					opponent := ev.source;
+					
+					endif
 
 				endif
 			EVID_HERDING:
