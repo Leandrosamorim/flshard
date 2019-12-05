@@ -147,7 +147,7 @@ var bardgump := GFCreateGump();
 	GFTextLine(bardgump, 374, 116, 600, "A2" );
 	GFTextLine(bardgump, 406, 116, 600, "A#2" );
 	GFTextLine(bardgump, 438, 116, 600, "B2" );
-	
+
 	//terceira oitava
 	GFTextLine(bardgump, 86, 146, 600, "C3" );
 
@@ -179,7 +179,7 @@ var bardgump := GFCreateGump();
 	var Gs2  := GFAddButton(bardgump, 342, 136, 2103, 2104, 1, 25);
 	var A2  := GFAddButton(bardgump, 374, 136, 2103, 2104, 1, 26);
 	var Ass2  := GFAddButton(bardgump, 406, 136, 2103, 2104, 1, 27);
-	var B2  := GFAddButton(bardgump, 438, 136, 2103, 2104, 1, 28);	
+	var B2  := GFAddButton(bardgump, 438, 136, 2103, 2104, 1, 28);
 
 	//terceira oitava
 	var C3  := GFAddButton(bardgump, 86, 166, 2103, 2104, 1, 29);
@@ -203,7 +203,7 @@ var bardgump := GFCreateGump();
 
 	var retv := GFSendGump(who, bardgump );
 
-	
+
 	if (retv[0] == 100)
 		notas.append("C");
 		BardNotes(who,item,notas,notas2,tempo,letra,what,magica);
@@ -238,7 +238,7 @@ var bardgump := GFCreateGump();
 		notas.append("A#");
 		BardNotes(who,item,notas,notas2,tempo,letra,what,magica);
 	elseif (retv[0] == 12)
-		notas.append("B"); 
+		notas.append("B");
 		BardNotes(who,item,notas,notas2,tempo,letra,what,magica);
 	elseif (retv[0] == 17)
 		notas.append("C2");
@@ -274,16 +274,16 @@ var bardgump := GFCreateGump();
 		notas.append("A#2");
 		BardNotes(who,item,notas,notas2,tempo,letra,what,magica);
 	elseif (retv[0] == 28)
-		notas.append("B2"); 
+		notas.append("B2");
 		BardNotes(who,item,notas,notas2,tempo,letra,what,magica);
 	elseif (retv[0] == 29)
-		notas.append("C3"); 
+		notas.append("C3");
 		BardNotes(who,item,notas,notas2,tempo,letra,what,magica);
 	elseif (retv[0] == 13)
-		notas.append("|"); 
+		notas.append("|");
 		BardNotes(who,item,notas,notas2,tempo,letra,what,magica);
 	elseif (retv[0] == 16)
-		notas.append("L"); 
+		notas.append("L");
 		letra.append(Requestgump(who,"Qual o verso a ser adicionado?","","",0));
 		BardNotes(who,item,notas,notas2,tempo,letra,what,magica);
 	elseif (retv[0] == 14)
@@ -298,7 +298,7 @@ var bardgump := GFCreateGump();
 		while (cint(tempo) > 2000)
 		    tempo := Requestgump(who,"O tempo nao pode ser tao grande, escolha um menor:","","",0);
 		endwhile
-		if (what == 1)		
+		if (what == 1)
 		tocarsound(who,item,notas,notas2,tempo,letra,magica);
 		elseif (what == 2)
 		escrevepartitura(who,item,notas,notas2,tempo,letra);
@@ -310,8 +310,8 @@ endfunction
 function tocarsound(who,item,notas,notas2,tempo,letra,magica)
 	var c,cs,d,ds,e,f,fs,g,gs,a,ass,b,c2,cs2,d2,ds2,e2,f2,fs2,g2,gs2,a2,ass2,b2,c3,inst,L,dif,magicause;
 
-	if ( magica) 
-		if (!temhabilidade(who, "Partituras Magicas"))
+	if ( magica)
+		if (!temhabilidade(who, "Talento Musical"))
 			SendSysMessageEx(who, "Voce nao entende essa partitura.", SSM_FAIL);
 			return 0;
 		endif
@@ -321,7 +321,7 @@ function tocarsound(who,item,notas,notas2,tempo,letra,magica)
 		SendSysMessage(who, "Voce deve esperar um momento antes de tocar uma musica magica novamente.",3,38);
 		return 0;
 	endif
-		
+
               //DIFICULDADE PELO TANTO DE NOTAS
 		dif := 0;
 		foreach nota in notas
@@ -333,9 +333,9 @@ function tocarsound(who,item,notas,notas2,tempo,letra,magica)
 		dif := (dif * 1);
 
               //DIFICULDADE PELA VELOCIDADE
-		if (Cint(tempo) < 50) dif := (dif + 30);	
-		elseif (Cint(tempo) < 100) dif := (dif + 20);	
-		elseif (Cint(tempo) < 200) dif := (dif + 15);		
+		if (Cint(tempo) < 50) dif := (dif + 30);
+		elseif (Cint(tempo) < 100) dif := (dif + 20);
+		elseif (Cint(tempo) < 200) dif := (dif + 15);
 		elseif (Cint(tempo) < 300) dif := (dif + 10);
 		elseif (Cint(tempo) < 400) dif := (dif + 7);
 		elseif (Cint(tempo) < 500) dif := (dif + 5);
@@ -362,7 +362,7 @@ function tocarsound(who,item,notas,notas2,tempo,letra,magica)
 			"1.4": dif := dif - 20;
 		endcase
 
-		L := 1;	
+		L := 1;
 		case(item.graphic)
 			0x0eb1:  c := 0x49E; cs := 0x4A1; d := 0x4A3 ; ds := 0x4A5; e := 0x4A7; f := 0x4A9; fs := 0x4AB; g := 0x4AD; gs := 0x4AF; a := 0x498; ass := 0x49A; b := 0x49C; inst := "Harpa Grande";
 				  c2 := 0x49F; cs2 := 0x4A2; d2 := 0x4A4 ; ds2 := 0x4A6; e2 := 0x4A8; f2 := 0x4AA; fs2 := 0x4AC; g2 := 0x4AE; gs2 := 0x4B0; a2 := 0x499; ass2 := 0x49B; b2 := 0x49D; inst := "Harpa Grande";
@@ -393,7 +393,7 @@ function tocarsound(who,item,notas,notas2,tempo,letra,magica)
 			return 1;
 		endif
 
-		
+
 		var x,y;
 		x := 0;
 		foreach nota in notas
@@ -406,13 +406,13 @@ function tocarsound(who,item,notas,notas2,tempo,letra,magica)
 			if (nota != "L")
 				y := y + 1;
 			endif
-		endforeach	
-		
+		endforeach
+
 		var duration := ((tempo + (tempo * x) + (tempo * y)) / 1000);
 		TS_StartTimer(who, "staminaPoison", duration);
 
 		sleepms(tempo);
-	
+
 		foreach nota in notas
 			if (nota == "C") PlaySoundEffect(who, c); sleepms(tempo);
 				elseif (nota == "C#") PlaySoundEffect(who, cs); sleepms(tempo);
@@ -439,16 +439,16 @@ function tocarsound(who,item,notas,notas2,tempo,letra,magica)
 				elseif (nota == "A#2") PlaySoundEffect(who, ass2); sleepms(tempo);
 				elseif (nota == "B2") PlaySoundEffect(who, b2); sleepms(tempo);
 				elseif (nota == "C3") PlaySoundEffect(who, c3); sleepms(tempo);
-				elseif (nota == "|") sleepms(tempo);    
-				elseif (nota == "L") 
+				elseif (nota == "|") sleepms(tempo);
+				elseif (nota == "L")
 				PrintTextAbove(who, letra[L],3,0);
-				L := L + 1;		
-			endif 				
+				L := L + 1;
+			endif
 		endforeach
 
 		if( Cint(GetObjProperty(who, "#MagicaMusic")) > ReadGameClock() )
 			return 0;
-		else 
+		else
 			playagain(who,item,notas,notas2,tempo,letra,magica);
 		endif
 
@@ -457,7 +457,7 @@ endfunction
 
 function tocarerrado(who,item,notas,notas2,tempo,letra,magica)
 var c,cs,d,ds,e,f,fs,g,gs,a,ass,b,c2,cs2,d2,ds2,e2,f2,fs2,g2,gs2,a2,ass2,b2,c3,inst,L,notanow;
-			
+
 		L := 1;
 		case(item.graphic)
 			0x0eb1:  c := 0x49E; cs := 0x4A1; d := 0x4A3 ; ds := 0x4A5; e := 0x4A7; f := 0x4A9; fs := 0x4AB; g := 0x4AD; gs := 0x4AF; a := 0x498; ass := 0x49A; b := 0x49C; inst := "Harpa Grande";
@@ -495,10 +495,10 @@ var c,cs,d,ds,e,f,fs,g,gs,a,ass,b,c2,cs2,d2,ds2,e2,f2,fs2,g2,gs2,a2,ass2,b2,c3,i
 		elseif (notanow == 11) PlaySoundEffect(who, e); sleepms(tempo);
 		elseif (notanow == 12) sleepms(tempo);
 		endif
-		if (nota == "L") 
+		if (nota == "L")
 		PrintTextAbove(who, letra[L],3,0);
-		L := L + 1;    
-		endif 		
+		L := L + 1;
+		endif
 		endforeach
 
  		playagain(who,item,notas,notas2,tempo,letra,magica);
@@ -540,7 +540,7 @@ function escrevepartitura(who,item,notas,notas2,tempo,letra)
 
 		if (TemHabilidade(who, "Talento Musical"))
 			printtextabove(who, "*Escrevendo a partitura*",3,0);
-		else 
+		else
 			SendSysMessage(who, "Voce arruinou a partitura",3,0);
 			printtextabove(who, "*Erra ao escrever as notas*",3,38);
 			DestroyItem(item);
@@ -557,7 +557,7 @@ function escrevepartitura(who,item,notas,notas2,tempo,letra)
 
 		if (TemHabilidade(who, "Talento Musical"))
 			printtextabove(who, "*Escrevendo a partitura*",3,0);
-		else 
+		else
 			SendSysMessage(who, "Voce arruinou a partitura",3,0);
 			printtextabove(who, "*Erra ao escrever as notas*",3,38);
 			DestroyItem(item);
@@ -576,14 +576,14 @@ function escrevepartitura(who,item,notas,notas2,tempo,letra)
 		DestroyItem(item);
 		var partitura := CreateItemInBackPack(who, 0x9924, 1);
 
-		Setobjproperty(partitura, "compositor", who.name);	
+		Setobjproperty(partitura, "compositor", who.name);
 		Setobjproperty(partitura, "notas", notas);
 		Setobjproperty(partitura, "notas2", notas2);
 		Setobjproperty(partitura, "tempo", tempo);
-		Setobjproperty(partitura, "letra", letra);				
+		Setobjproperty(partitura, "letra", letra);
 
 		var nomedamusica := Requestgump(who,"Qual o nome da Musica?","","",0);
-		Setname(partitura,nomedamusica);		
+		Setname(partitura,nomedamusica);
 
 
 endfunction
@@ -599,6 +599,6 @@ function TentarDenovo(who,item,notas,notas2,tempo,letra)
 		SendSysMessage(who, "Cancelado.",3,38);
 		return 0;
 	endif
-		
+
 
 endfunction
