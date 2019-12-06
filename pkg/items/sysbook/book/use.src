@@ -12,7 +12,7 @@ program useBook(who,book)
 		SendSysMessage(who, "Outra pessoa esta usando este livro.", SSM_FAIL);
 		return 0;
 	endif
-	
+
 	//check pra cartas
 	If (GetObjProperty(book, "Selado") == "sim")
 		var alterar := YesNo(who, "Esta carta esta selada. Para abri-la, voce precisara romper o selo. Deseja fazer isso?" , "Sim.", "Nao.");
@@ -23,7 +23,7 @@ program useBook(who,book)
 					SendOpenBook(who, book);
 				endif
 			endif
-			if (TemHabilidade(who, "Falsificar Aprimorado"))
+			if (TemHabilidade(who, "Falsificar"))
 				var GM := YesNo(who, "Voce pode optar por nao romper o selo e ainda ler a carta. Deseja faze-lo?" , "Sim.", "Nao.");
 				if (GM)
 					SendOpenBook(who, book);
