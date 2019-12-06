@@ -105,7 +105,7 @@ function Rastrodefogo(npc, opponent, duracao)
 
 	var chars := ListMobilesNearLocation(opponent.x, opponent.y, opponent.z, 4, npc.realm);
 	foreach mobile in chars
-		DamageFLS(mobile, RandomIntMinMax(40,duracao), DMG_FIRE, npc);
+		DamageFLS(mobile, RandomIntMinMax(40,cint(duracao)), DMG_FIRE, npc);
 	endforeach
 	
 

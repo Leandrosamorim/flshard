@@ -30,6 +30,7 @@ program SpellStarter(params)
 	var spellinfo := params[2]; // spellinfo
 	var scroll := params[3]; // item que usou pra castar o spell (scroll, book, varinha ou nada)
 	var targ := params[4];
+	var sens := TemHabilidade(mobile, "Sensibilidade Profana");
 
 
 	if (spellinfo.id != error) //le o cfg pra escrever a info
@@ -75,6 +76,10 @@ program SpellStarter(params)
 
 	// Perform various checks to see if mobile can perform the spell
 	spellinfo.mana := spellinfo.mana + Cint(spellinfo.mana*GetObjProperty(mobile, "#manapenalty")/100);
+	if(sens)
+		spellinfo.mana := 0;
+	endif
+	
 
 	if (spellinfo.spelltype == "Swordmage")
 		if (GetObjProperty(mobile, "raca") == "Humano")
@@ -105,8 +110,8 @@ program SpellStarter(params)
 		EraseObjProperty(mobile, "#medding");
 		EraseObjProperty(mobile, "#Casting");
 		return 0;
-	elseif ( !AP_ConsumeVital(mobile, MANA, spellinfo.mana) && !mobile.npctemplate )
-		if ( !TemHabilidade(mobile, "Determinacao Elemental")  )
+	elseif ( !AP_ConsumeVital(mobile, MANA, spellinfo.mana) && !mobile.npctemplate)
+		if ( !TemHabilidade(mobile, "Determinacao Elemental"))
 			SendSysMessageEx(mobile, "Voce nao possui energia arcana suficiente em seu corpo para invocar esta magia!", SSM_FAIL);
 			FailSpell(mobile);
 			EraseObjProperty(mobile, "#Casting");
@@ -259,12 +264,23 @@ program SpellStarter(params)
 		var difficulty := CInt(spellinfo.Difficulty);
 		
 		mobile.frozen := 0;
+		if(TemHabilidade(mobile, "Sensibilidade Profana"))
+		attribute := MECHANICALAPITUDE;
+		endif
+			
 		var skill_check := SkillCheck(mobile, attribute, difficulty);
 
 		// skill_check > 0 on success
 		if ( skill_check > 0 )
 			if (scroll.isA(POLCLASS_ITEM))
-				SubtractAmount(scroll, 1);
+				if(!TemHabilidade(mobile, "Reaproveitar Pergaminho"))
+					SubtractAmount(scroll, 1);
+				else
+					var chance := RandomIntMinMax(0,100);
+					if (chance > attribute)
+						SubtractAmount(scroll, 1);
+					endif
+				endif
 			endif
 			//escolhe o target
 			if (!targ)
@@ -281,7 +297,7 @@ program SpellStarter(params)
 					endif
 					targ := Target(mobile, noto );
 					if (GetCooldown(targ, "repeal") > 0)
-						SendSysMessageEx(mobile, "O alvo esta invulnetavel a magias.", SSM_FAIL);
+						SendSysMessageEx(mobile, "O alvo esta invulneravel a magias.", SSM_FAIL);
 						return 1;
 					endif
 					TurnObjectToward(mobile, targ.x, targ.y);
@@ -323,6 +339,7 @@ program SpellStarter(params)
 			if (TemHabilidade(mobile, "Mago Precavido"))
 				HealMana(mobile, cint(spellinfo.mana*0.5));
 			endif
+			
 			PlaySoundEffect(mobile, SFX_SPELL_FAIL);
 			SendSysMessageEX(mobile, "Voce falhou em invocar a magia.", SSM_FAIL);
 		endif

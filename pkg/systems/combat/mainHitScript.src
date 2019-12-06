@@ -87,6 +87,11 @@ program MainHitScript( params )
 	if (cint(GetObjPRoperty(attacker, "#mataroumorrer")) > 0 )
 		basedamage := basedamage*3;
 	endif
+	if(TemHabilidade(attacker, "Flanquear"))
+		if(IsBehind(defender,attacker.x, attacker.y))
+			basedamage := basedamage + basedamage * 0.1;
+		endif
+	endif
 	WeaponHitScripts(attacker, defender, weapon, armor, basedamage, rawdamage);
 	ArmorHitScripts(attacker, defender, weapon, armor, basedamage, rawdamage);
 
