@@ -28,8 +28,9 @@ program usar_etiqueta(who, the_item)
 		return;
 	endif
 
-	if (use_on.graphic == 3849)
-		 SetName(use_on, itemdesc); //
+	if (use_on.graphic == 3849 || use_on.graphic == 2474 || use_on.graphic == 3647 || use_on.graphic == 3645 || use_on.graphic == 3651 || use_on.graphic == 2482 || use_on.graphic == 3702 )
+		//Permite nomear poções, caixas, baús e bags
+		 SetName(use_on, itemdesc);
 		 use_on.color := the_item.color;
 	else
 		SendSysMessage(who, "Este item nao pode ser rotulado.");
