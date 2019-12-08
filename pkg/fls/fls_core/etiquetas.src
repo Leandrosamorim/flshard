@@ -34,7 +34,8 @@ program usar_etiqueta(who, the_item)
 		use_on.graphic == 3647 || use_on.graphic == 3646 || //Medium Crate
 		use_on.graphic == 3645 || //Large Crate
 		use_on.graphic == 3651 || use_on.graphic == 3650 || //Baú de madeira
-		use_on.graphic == 2482 || use_on.graphic == 3702 || //Backpag & Bag
+		use_on.graphic == 2482 || use_on.graphic == 3701 || //Backpag
+		use_on.graphic == 3702 //Bag
 		)
 		//Permite nomear poções, caixas, baús e bags
 		 SetName(use_on, itemdesc);
