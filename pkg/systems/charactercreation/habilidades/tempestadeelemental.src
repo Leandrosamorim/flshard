@@ -19,6 +19,11 @@ program manobra(who)
 
 	var element;
 	element := GetObjProperty(who.weapon, "#elementalweapon");
+	if (element == error)
+		SendSysMessageEx(who, "Voce precisa estar equipado com uma arma encantada.", SSM_INFO);
+		return 0;
+	endif
+	
 	element := element.type;
 	var duracao ;
 	duracao := AP_GetSkill(who, MAGICLORE);

@@ -855,13 +855,18 @@ function ParryCheck(attacker, defender, byref rawdamage)
 	parryBonus := Cint(GetObjProperty(defender, "parrybonus")) + Cint(GetObjProperty(shield, "parrybonus")) + Cint((item_cfg[shield.objtype]).parrybonus);
 	var tempParryBonus := cint(getObjProperty(defender, "#tempparrybonus"));
 	if (tempParryBonus);
+		EraseObjPRoperty(defender, "#tempparrybonus");
 		parryBonus := parryBonus + tempParryBonus;
-		EraseObjProperty(defender, "#tempparrybonus");
 	endif
 
 	//pega a skill e calcula a chance final e delay
 	var skill := CDbl(AP_GetSkill(defender, PARRY));
 	var parryDelay := 8 - cint(( AP_GetSkill(defender, PARRY)/20 )) +  Cint((item_cfg[shield.objtype]).parrydelay);
+	
+	if (tempParryBonus == 100)
+		parryDelay := 0;
+	endif
+
 	if ( TemHabilidade(defender.party.leader, "Inspirar Defesas"))
 		parryDelay := parryDelay - 1;
 	endif

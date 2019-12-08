@@ -17,12 +17,26 @@ program HitScript(params)
 	//var basedamage	:= params[5];
 	var rawdamage	:= params[6];
 	params := 0; // Not needed anymore.
-
-	var categorias := array{"Dragon","Undead","Giants","GiantAnimal","EvilHuman","Goblin"};
-	var selected := categorias[RandomIntMinMax(1,6)];
+	
 	
 	if (!GetObjProperty(weapon, "slayer"))
+		var categorias := array{"Dragon","Undead","Giants","GiantAnimal","EvilHuman","Goblin"};
+		var selected := categorias[RandomIntMinMax(1,6)];
 		SetObjProperty(weapon, "slayer", selected);
+				case(selected)
+				"Dragon":
+				SetObjProperty(weapon, "description", "Empunhadura de osso de draconiano");
+				"Undead":
+				SetObjProperty(weapon, "description", "Empunhadura entalhada num femur");
+				"Giants":
+				SetObjProperty(weapon, "description", "Empunhadura esculpida da falange de um gigante");
+				"GiantAnimal":
+				SetObjProperty(weapon, "description", "Empunhadura decorada com enormes vertebras animais");
+				"EvilHuman":
+				SetObjProperty(weapon, "description", "Empunhadura esculpida num osso humano");
+				"Goblin":
+				SetObjProperty(weapon, "description", "Empunhadura entalhada num osso goblinoide");
+			endcase
 	endif
 
 	if (defender.npctemplate)
@@ -32,25 +46,7 @@ program HitScript(params)
 			if (cfg[npctemplate.template].Category == inimigo)
 				var dmg := rawdamage / 2;
 				DamageFLS(defender, dmg, DMG_FORCED, attacker);
-				if(GetObjProperty(weapon, "#slayer"))
-					return 0;
-				endif
 			endif
-			case(selected)
-			"Dragon":
-			SetObjProperty(weapon, "description", "Empunhadura de osso de draconiano");
-			"Undead":
-			SetObjProperty(weapon, "description", "Empunhadura entalhada num femur");
-			"Giants":
-			SetObjProperty(weapon, "description", "Empunhadura esculpida da falange de um gigante");
-			"GiantAnimal":
-			SetObjProperty(weapon, "description", "Empunhadura decorada com enormes vertebras animais");
-			"EvilHuman":
-			SetObjProperty(weapon, "description", "Empunhadura esculpida num osso humano");
-			"Goblin":
-			SetObjProperty(weapon, "description", "Empunhadura entalhada num osso goblinoide");
-			endcase
-		SetObjProperty(weapon, "#slayer", 1);
 	endif
 	
 	return 1;
