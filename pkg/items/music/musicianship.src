@@ -67,8 +67,8 @@ program skill_Musicianship(who, item)
 	endif
 
 	var retv := GFSendGump(who, bardgump );
-	
-	var tempo := "";
+
+	var tempo := "500";
 
 	//Tocar Livremente
 	if (retv[0] == 1)
@@ -89,7 +89,7 @@ program skill_Musicianship(who, item)
 	endif
 
 	if (retv[0] == 2)
-		var what := 1; 
+		var what := 1;
 		BardNotes(who,item,notas,notas2,tempo,letra,what,magica);
 		return 1;
 	endif
