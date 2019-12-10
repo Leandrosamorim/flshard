@@ -46,7 +46,7 @@ program partituramagica(item)
 		item.name := "Grito de Cha'ke";
 		compositor := "Desconhecido";
 		notas := {"C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C"};
-		tempo := 200;
+		tempo := 250;
 		magica := 5;
 	elseif (randmagica == 6) //OK
 		item.name := "Ardiloso Marach";
@@ -66,11 +66,11 @@ program partituramagica(item)
 		notas := {"C", "D", "E", "G", "A", "G", "D", "|", "A", "G", "A", "|", "D", "G", "A", "|", "|", "|", "C", "E", "C", "|", "C", "E", "D", "|", "C", "D", "E", "G", "A", "G", "C"};
 		tempo := 300;
 		magica := 8;
-	elseif (randmagica == 10) 
+	elseif (randmagica == 10)
 		item.name := "Flamula de Kandis Ra";
 		compositor := "Desconhecido";
 		notas := {"A", "|", "B", "|", "C", "|", "D", "|", "E", "A", "E", "A", "F", "A", "F", "A", "E", "A", "E", "A", "|", "D", "|", "C", "|", "B", "|", "A", "G#", "E", "G#", "E", "B", "E", "B", "E", "A", "A", "A", "A"};
-		tempo := 100;
+		tempo := 250;
 		magica := 10;
 	elseif (randmagica == 9)  //OK
 		item.name := "Noite em Unnam";
@@ -82,7 +82,7 @@ program partituramagica(item)
 		item.name := "Silencio de Anlar";
 		compositor := "Desconhecido";
 		notas := {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B", "B", "A#", "A", "G#", "G", "F#", "F", "D#", "D", "C#", "C", "C#", "C", "C#", "C", "C#"};
-		tempo := 200;
+		tempo := 250;
 		magica := 11;
 	elseif (randmagica == 12) //OK
 		item.name := "Paixao Minguante";
@@ -93,7 +93,7 @@ program partituramagica(item)
 
 	endif
 
-	Setobjproperty(item, "compositor", compositor);	
+	Setobjproperty(item, "compositor", compositor);
 	Setobjproperty(item, "notas", notas);
 	Setobjproperty(item, "tempo", tempo);
 	Setobjproperty(item, "letra", letra);

@@ -37,8 +37,8 @@ program composicaoscript(who, item)
 	var notas := array;
 	var notas2 := array;
 	var letra := array;
-	var tempo := "";
-	
+	var tempo := "500";
+
 	var what := 2;
 	BardNotes(who,item,notas,notas2,tempo,letra,what,magica);
 
