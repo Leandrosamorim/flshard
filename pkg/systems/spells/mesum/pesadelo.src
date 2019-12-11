@@ -22,9 +22,15 @@ program SpellScript(params)
 	endif
 
 	var dmg := AP_GetSkill(who, MAGICLORE)*0.75;
-
-	if (CheckResist(targ, VONTADE, 80+cint(AP_GetSkill(who, MAGICLORE))))
-		dmg := dmg/2;
+	
+	if(TemHabilidade(who, "Vontade Esmagadora"))
+		if (CheckResist(targ, VONTADE, 105+cint(AP_GetSkill(who, MAGICLORE))))
+			dmg := dmg/2;
+		endif
+	else
+		if (CheckResist(targ, VONTADE, 80+cint(AP_GetSkill(who, MAGICLORE))))
+			dmg := dmg/2;
+		endif
 	endif
 
 	if (temHabilidade(who, "Maldicao do Sangue de Asan"))
