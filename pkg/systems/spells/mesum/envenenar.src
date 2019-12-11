@@ -36,13 +36,22 @@ program SpellScript(params)
 	endif
 
 
-
-	if (!CheckResist(targ, VONTADE, 60+cint(AP_GetSkill(who, MAGICLORE))))
-		TS_StartTimer(targ, "defaultPoison", 120, lvl, who);
-		Corromper(who, 22, targ);
+	if(TemHabilidade(who, "Vontade Esmagadora"))
+		if (!CheckResist(targ, VONTADE, 65+cint(AP_GetSkill(who, MAGICLORE))))
+			TS_StartTimer(targ, "defaultPoison", 120, lvl, who);
+			Corromper(who, 22, targ);
+		else
+			SendSysMessageEx(who, "O alvo  resistiu a magia.", SSM_FAIL);
+			SendSysMessageEx(targ, "Voce resistiu a magia.", SSM_INFO);
+		endif
 	else
-		SendSysMessageEx(who, "O alvo  resistiu a magia.", SSM_FAIL);
-		SendSysMessageEx(targ, "Voce resistiu a magia.", SSM_INFO);
+		if (!CheckResist(targ, VONTADE, 40+cint(AP_GetSkill(who, MAGICLORE))))
+			TS_StartTimer(targ, "defaultPoison", 120, lvl, who);
+			Corromper(who, 22, targ);
+		else
+			SendSysMessageEx(who, "O alvo  resistiu a magia.", SSM_FAIL);
+			SendSysMessageEx(targ, "Voce resistiu a magia.", SSM_INFO);
+		endif
 	endif
 	Set_Critical( 0 );
 
