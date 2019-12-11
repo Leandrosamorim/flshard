@@ -23,12 +23,24 @@ program SpellScript(params)
 
 	var lvl := cint(AP_GetSkill(who, MAGICLORE)/20);
 
-	if (!CheckResist(targ, VONTADE, 40+cint(AP_GetSkill(who, MAGICLORE))))
-		TS_StartTimer(targ, "manaPoison", cint(AP_GetSkill(who, MAGICLORE)), lvl);
-		Corromper(who, 23, targ);
+	if(TemHabilidade(who, "Vontade Esmagadora"))
+		if (!CheckResist(targ, VONTADE, 65+cint(AP_GetSkill(who, MAGICLORE))))
+			TS_StartTimer(targ, "manaPoison", cint(AP_GetSkill(who, MAGICLORE)), lvl);
+			Corromper(who, 23, targ);
+		else
+			SendSysMessageEx(who, "O alvo  resistiu a magia.", SSM_FAIL);
+			SendSysMessageEx(targ, "Voce resistiu a magia.", SSM_INFO);
+			return;
+		endif
 	else
-		SendSysMessageEx(who, "O alvo  resistiu a magia.", SSM_FAIL);
-		SendSysMessageEx(targ, "Voce resistiu a magia.", SSM_INFO);
+		if (!CheckResist(targ, VONTADE, 40+cint(AP_GetSkill(who, MAGICLORE))))
+			TS_StartTimer(targ, "manaPoison", cint(AP_GetSkill(who, MAGICLORE)), lvl);
+			Corromper(who, 23, targ);
+		else
+			SendSysMessageEx(who, "O alvo  resistiu a magia.", SSM_FAIL);
+			SendSysMessageEx(targ, "Voce resistiu a magia.", SSM_INFO);
+			return;
+		endif
 	endif
 	
 	return 1;
