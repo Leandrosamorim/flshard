@@ -15,11 +15,19 @@ program SpellScript(params)
 	var targ := params[2];
 	params := 0; // No longer needed
 
-	if (CheckResist(targ, VONTADE, cint(AP_GetSkill(who, MAGICLORE))))
-		SendSysMEssageEx(who, "O Alvo resistiu a magia.", SSM_FAIL);
-		SendSysMessageEx(targ, "Voce resistiu a magia.", SSM_INFO);
-		return 0;
-	endif	
+	if(TemHabilidade(who, "Vontade Esmagadora"))
+		if (CheckResist(targ, VONTADE, 25 + cint(AP_GetSkill(who, MAGICLORE))))
+			SendSysMEssageEx(who, "O Alvo resistiu a magia.", SSM_FAIL);
+			SendSysMessageEx(targ, "Voce resistiu a magia.", SSM_INFO);
+			return 0;
+		endif
+	else
+		if (CheckResist(targ, VONTADE, cint(AP_GetSkill(who, MAGICLORE))))
+			SendSysMEssageEx(who, "O Alvo resistiu a magia.", SSM_FAIL);
+			SendSysMessageEx(targ, "Voce resistiu a magia.", SSM_INFO);
+			return 0;
+		endif
+	endif
 
 	var e := TS_StartTimer(targ, "fugademana", cint(AP_GetSkill(who, MAGICLORE)/2), cint(AP_GetSkill(who, MAGICLORE)), who, 0); 
 	if (e == error)
