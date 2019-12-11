@@ -55,9 +55,16 @@ program SpellScript(params)
 
 	var amt := Cint(AP_GetSkill(who, MAGICLORE)*0.5);
 	var time := Cint(AP_GetSkill(who, MAGICLORE)/10) + 10;
+	
+	if(TemHabilidade(who, "Vontade Esmagadora"))
 
-	if (CheckResist(targ, VONTADE, 80+cint(AP_GetSkill(who, MAGICLORE))))
-		time := time/2;
+		if (CheckResist(targ, VONTADE, 105+cint(AP_GetSkill(who, MAGICLORE))))
+			time := time/2;
+		endif
+	else
+		if (CheckResist(targ, VONTADE, 80+cint(AP_GetSkill(who, MAGICLORE))))
+			time := time/2;
+		endif
 	endif
 
 	TS_StartTimer(targ, "weaken", time, amt, who, 0);
