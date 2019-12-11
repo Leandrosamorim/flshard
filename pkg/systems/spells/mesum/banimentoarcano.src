@@ -29,11 +29,18 @@ program SpellScript(params)
 	endif
 
 	PlaySoundEffect(who, SFX_SPELL_TELEKINESIS );
-	
-	if (CheckResist(targ, VONTADE, cint(AP_GetSkill(who, MAGICLORE))))
-		SendSysMEssageEx(who, "Voce nota que o alvo nao foi afetado.", SSM_FAIL);
-		SendSysMessageEx(targ, "Voce resistiu a magia.", SSM_INFO);
-	return;
+	if(TemHabilidade(who, "Vontade Esmagadora"))
+		if (CheckResist(targ, VONTADE, 25 + cint(AP_GetSkill(who, MAGICLORE))))
+			SendSysMEssageEx(who, "Voce nota que o alvo nao foi afetado.", SSM_FAIL);
+			SendSysMessageEx(targ, "Voce resistiu a magia.", SSM_INFO);
+			return;
+		endif
+	else
+		if (CheckResist(targ, VONTADE, cint(AP_GetSkill(who, MAGICLORE))))
+			SendSysMEssageEx(who, "Voce nota que o alvo nao foi afetado.", SSM_FAIL);
+			SendSysMessageEx(targ, "Voce resistiu a magia.", SSM_INFO);
+			return;
+		endif
 	endif
 	
 	var location := {targ.x, targ.y, targ.z};
