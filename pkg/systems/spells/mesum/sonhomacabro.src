@@ -14,10 +14,19 @@ program SpellScript(params)
 	params := 0; // No longer needed
 
 	Corromper(who, 30, targ);
-if (CheckResist(targ, VONTADE, 40+cint(AP_GetSkill(who, MAGICLORE))))
-		SendSysMEssageEx(who, "Voce nota que o alvo nao foi afetado.", SSM_FAIL);
-		SendSysMessageEx(targ, "Voce resistiu a magia.", SSM_INFO);
-	return;
+	
+	if(TemHabilidade(who, "Vontade Esmagadora"))
+		if (CheckResist(targ, VONTADE, 65+cint(AP_GetSkill(who, MAGICLORE))))
+			SendSysMEssageEx(who, "Voce nota que o alvo nao foi afetado.", SSM_FAIL);
+			SendSysMessageEx(targ, "Voce resistiu a magia.", SSM_INFO);
+		return;
+		endif
+	else
+		if (CheckResist(targ, VONTADE, 40+cint(AP_GetSkill(who, MAGICLORE))))
+			SendSysMEssageEx(who, "Voce nota que o alvo nao foi afetado.", SSM_FAIL);
+			SendSysMessageEx(targ, "Voce resistiu a magia.", SSM_INFO);
+		return;
+		endif
 	endif
 	
 	var e := TS_StartTimer(targ, "sleep", cint(AP_GetSkill(who, MAGICLORE)/2), 1, who, 0); 
