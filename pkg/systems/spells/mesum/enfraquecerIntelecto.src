@@ -19,10 +19,18 @@ program SpellScript(params)
 	endif
 
 	var amt;
-	if (!CheckResist(targ, VONTADE, 40+cint(AP_GetSkill(who, MAGICLORE))))
-		amt := Cint(AP_GetSkill(who, MAGICLORE)*0.5);
+	if(TemHabilidade(who, "Vontade Esmagadora"))
+		if (!CheckResist(targ, VONTADE, 65+cint(AP_GetSkill(who, MAGICLORE))))
+			amt := Cint(AP_GetSkill(who, MAGICLORE)*0.5);
+		else
+			amt := Cint(AP_GetSkill(who, MAGICLORE)*0.25);
+		endif
 	else
-		amt := Cint(AP_GetSkill(who, MAGICLORE)*0.25);
+		if (!CheckResist(targ, VONTADE, 40+cint(AP_GetSkill(who, MAGICLORE))))
+			amt := Cint(AP_GetSkill(who, MAGICLORE)*0.5);
+		else
+			amt := Cint(AP_GetSkill(who, MAGICLORE)*0.25);
+		endif
 	endif
 
 	if (temHabilidade(who, "Maldicao do Sangue de Asan"))
