@@ -22,7 +22,7 @@ program canInsert(mobile, container, movetype, inserttype, item, existing_stack,
 			 0xE34, 0x6116, 0xff990, 0xff991, 0xff992, 0xff994, 0xff995, // pergaminhos
 			 0xfbf, // caneta tinteiro
 			 0x6100, // grimório
-			 0x6161,0x6157,0x6158,0x6159,0x6160 //pergaminhos radiantes
+			 0x6161,0x6157,0x6158,0x6159,0x6160,0x6162,0x6163,0x6164,0x6165,0x6166,0x6167 //pergaminhos radiantes
 			};
 	if (item.objtype IN valid)
 		return 1;
@@ -33,6 +33,6 @@ program canInsert(mobile, container, movetype, inserttype, item, existing_stack,
 	SendSysMessage(mobile, "O banco nao aceita todos os tipos de itens. Apenas pertences pessoais, tais como:");
 	SendSysMessage(mobile, "Moedas, joias, pedras preciosas, livros, chaves, pergaminhos.");
 	SendSysMessage(mobile, "Se o item que tiver tentando guardar no banco esteja em uma dessas categorias, envie page.");
-	
+
 	return 0;
 endprogram
