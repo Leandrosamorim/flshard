@@ -4,14 +4,14 @@
 
 use uo;
 use os;
-include ":gumps:yesno";
+include ":gumps:yesNo";
 include "include/say";
 include ":charactercreation:habilidades";
 
 program textcmd_openPack(who)
 	SendSysMessageEx(who, "Selecione o personagem que voce deseja revistar.", SSM_REQUEST);
 	var targ := Target(who);
-	
+
 	if ( !targ )
 		SendSysMessageEx(who, "Cancelled.", SSM_FAIL);
 		return 0;
@@ -31,7 +31,7 @@ program textcmd_openPack(who)
 
 	var perm := YesNo(targ, "Você permite que "+who.name+" lhe reviste?" , "Sim.", "Não.");
 
-	if (!perm)	
+	if (!perm)
 		SendSysMessageEx(who, targ.name+" nao permitiu que voce o revistasse.", SSM_INFO);
 	else
 		var item;
@@ -58,12 +58,21 @@ program textcmd_openPack(who)
 			endif
 		endif
 		PrintText(who, "*revistando "+targ.name+"*");
-		SendViewContainer(who, targ.backpack);
-		
+		SendOpenSpecialContainer(who, targ.backpack);
+
+		while(1)
+			if ( Distance(who, targ) > 2 )
+				SendSysMessageEx(who, "O alvo se afastou demais.", SSM_FAIL);
+				break;
+			endif
+		endwhile
+
+		who.facing := who.facing;
+
 		var x := who.x;
 		var y := who.y;
 		detach();
-		while ((who.x == x && who.y == y) || Distance(who,targ) < 4)
+		while ((who.x == x && who.y == y) || Distance(who,targ) < 2)
 			sleep(1);
 		endwhile
 		if (GetObjProperty(targ, "ocultando"))
@@ -74,6 +83,6 @@ program textcmd_openPack(who)
 			EraseObjProperty(targ, "ocultando");
 		endif
 	endif
-	
+
 	return 1;
 endprogram
