@@ -199,7 +199,24 @@ exported function Attack(attacker, defender)
       			PrintText(defender, "*esquiva-se*");
       			EraseObjProperty(defender, "evasao");
       			if (TemHabilidade(defender, "Esquiva Oportunista"))
-        			oportunidade := 1;
+        			if (GetObjProperty(defender, "#atacandooportunidade") == error)
+						SetObjProperty(defender, "#atacandooportunidade", 1);
+						printtext(defender, "*ataque de oportunidade*");
+						//defender.attack_once(attacker);
+						var new_hit_chance := CalculateHitChance(defender, attacker);
+						var new_random := RandomInt(100)+1;
+						PlayAttackAnimation(defender);
+						if ( new_random < new_hit_chance )
+							var armor :=  CS_GetEquipmentInArmorZone(attacker, CS_GetRandomArmorZone());
+							armor := armor[ RandomInt( len( armor ) ) + 1];
+							PlayHitSounds(defender, attacker);
+							var time := ReadGameClock();
+							var dmg := CalculateRawDamage(defender, defender.weapon);		
+							var result := Run_Script_To_Completion(":combat:mainHitScript", array{defender, attacker, defender.weapon, armor, dmg, dmg});
+						endif
+
+					EraseObjProperty(defender, "#atacandooportunidade");
+					endif
       			endif
       			return 1;
     		endif
@@ -300,7 +317,7 @@ exported function Attack(attacker, defender)
 		endif
 	
 	
-		if ( (GetCooldown(defender, "ataqueoportunidade") > 0) || oportunidade)
+		if ( (GetCooldown(defender, "ataqueoportunidade") > 0) || oportunidade == 1)
 			if (Distance(attacker,defender)<=1 && defender.weapon.attributte != "RangedCombat")
 				if (GetObjProperty(defender, "#atacandooportunidade") == error)
 					SetObjProperty(defender, "#atacandooportunidade", 1);
@@ -316,6 +333,7 @@ exported function Attack(attacker, defender)
 						var time := ReadGameClock();
 						var dmg := CalculateRawDamage(defender, defender.weapon);		
 						var result := Run_Script_To_Completion(":combat:mainHitScript", array{defender, attacker, defender.weapon, armor, dmg, dmg});
+						oportunidade := 0;
 					endif
 
 					EraseObjProperty(defender, "#atacandooportunidade");

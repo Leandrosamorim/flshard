@@ -762,7 +762,11 @@ function Corromper(who, spell, targ)
 	var variavel; var corrupcao;
 	
 	//testa resistencia de vontade
-	if (CheckResist(who, VONTADE, 20*spellinfo.cycles)) 
+	if (temHabilidade(who, "Pacto com Shimoria"))
+		if (CheckResist(who, VONTADE, 16*spellinfo.cycles)) 
+		return 0;
+		endif
+	elseif (CheckResist(who, VONTADE, 20*spellinfo.cycles)) 
 		return 0;
 	endif
 	
