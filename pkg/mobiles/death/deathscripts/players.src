@@ -96,12 +96,13 @@ program death(params)
 				SetObjProperty(ghost, "morto", 1);
 				SetObjProperty(corpse, "deathtimer", polcore().systime);
 				var dias := GetObjProperty(ghost, "createdate");
+				dias := (polcore().systime - dias)/2;
 				var logs := FindAccount(ghost).getprop("mortelog");
-				if (logs == error || logs < dias/2)
-					logs := (polcore().systime) - dias/2;
+				if (logs == error || logs < dias)
+					logs := dias;
 				endif
-				FindAccount(ghost).setprop("mortelog", logs);
-				SendSysMessage(ghost, "Seu proximo char tera " + dias/2 + "adicionados ao seu createdate");
+				FindAccount(ghost.acctname).setprop("mortelog", logs);
+				SendSysMessage(ghost, "Seu proximo char tera " + dias + "adicionados ao seu createdate");
 
 				sleep(5);
 				return 1;
@@ -156,12 +157,13 @@ program death(params)
 			SetObjProperty(ghost, "morto", 1);
 			SetObjProperty(corpse, "deathtimer", polcore().systime);
 			var dias := GetObjProperty(ghost, "createdate");
+			dias := (polcore().systime - dias) / 2;
 			var logs := FindAccount(ghost).getprop("mortelog");
-				if (logs == error || logs < dias/2)
-				logs := (polcore().systime) - dias/2;
+				if (logs == error || logs < dias)
+				logs := dias;
 				endif
-			FindAccount(ghost).setprop("mortelog", logs);
-			SendSysMessage(ghost, "Seu proximo char tera " + dias/2 + "adicionados ao seu createdate");
+			FindAccount(ghost.acctname).setprop("mortelog", logs);
+			SendSysMessage(ghost, "Seu proximo char tera " + dias + "adicionados ao seu createdate");
 			return 1;
 		endif
 		tempo := tempo - 1;

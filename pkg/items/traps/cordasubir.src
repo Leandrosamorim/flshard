@@ -10,6 +10,10 @@ include ":charactercreation:resists";
 include ":taming:taming";
 
 program cordasubir(who,item)
+
+	if(!GetObjProperty(item, "cooldown"))
+		Start_Script(":traps:sumir:", item);
+	endif
 	
 	var dest := GetObjProperty(item, "Destination");
 	var zdif;
